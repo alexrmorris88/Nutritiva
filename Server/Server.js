@@ -4,11 +4,7 @@ const app = express();
 
 // Run backend server
 const dotenv = require("dotenv");
-
-// Setting up config file
 dotenv.config({ path: "Server/config/config.env" });
-
-app.get("/", (req, res) => res.send("hello"));
 
 app.listen(process.env.PORT, () =>
   console.log(

@@ -1,4 +1,25 @@
 {
+  "name": "Nutritiva",
+  "version": "1.0.0",
+  "description": "eCommerce Supplement Store",
+  "main": "Server.js",
+  "scripts": {
+    "start": "node Server/Server.js",
+    "server": "nodemon Server/Server.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexrmorris88/Nutritiva.git"
+  },
+  "author": "Alex Morris",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alexrmorris88/Nutritiva/issues"
+  },
+  "homepage": "https://github.com/alexrmorris88/Nutritiva#readme",
+
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
