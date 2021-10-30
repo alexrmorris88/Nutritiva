@@ -4,11 +4,9 @@ const Product = require("../../models/productSchema");
 // TODO: const asyncErrors = require("../../validations/asyncErrors");
 
 // note: add these routes in:
-// todo: updateProductByID,
 // todo: createProductReview,
 // todo: getProductReviews,
 // todo: deleteReview,
-// todo: getAdminProducts,
 
 // @route   POST /products/new
 // @desc    Create New Product
@@ -115,4 +113,26 @@ exports.updateProductByID = async (req, res, next) => {
       })
     )
     .catch((err) => res.status(404).json(err.message));
+};
+
+// @route   GET /products/admin/all/
+// @desc    Update Product by ID
+// TODO: @access  Private/Admin
+exports.getAdminProducts = async (req, res, next) => {
+  let product = await Product.find()
+    .then((product) =>
+      res.status(200).json({
+        success: true,
+        product,
+      })
+    )
+    .catch((err) => res.status(404).json(err.message));
+};
+
+// @route   POST /products/reviews/create
+// @desc    Create Product Reviews
+// TODO: FIXME: @access  Private
+exports.createProductReviews = async (req, res, next) => {
+
+
 };

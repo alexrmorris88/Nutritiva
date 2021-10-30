@@ -13,6 +13,7 @@ app.use(bodyParser.json());
 
 // Import the Routes
 const products = require("./routes/products");
+const users = require("./routes/users");
 
 // Mongo DB Connection
 const mongoose = require("mongoose");
@@ -23,6 +24,7 @@ mongoose
 
 // Use Routes
 app.use("/products", products);
+app.use("/users", users);
 
 // Run backend Server
 dotenv.config({ path: "Server/config/config.env" });

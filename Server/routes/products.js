@@ -8,9 +8,11 @@ const {
   deleteProduct,
   getProductByID,
   updateProductByID,
+  getAdminProducts,
+  createProductReviews,
 } = require("./controllers/productsController");
 
-// New Product
+// TODO: Private/Admin - New Product
 router.route("/new").post(newProduct);
 
 // All Products
@@ -19,11 +21,17 @@ router.route("/all").get(allProducts);
 // Get Product by ID
 router.route("/:id").get(getProductByID);
 
-// Delete Product by ID
+// TODO: Private/Admin - Delete Product by ID
 router.route("/delete/:id").delete(deleteProduct);
 
-// Update Product by ID
+// TODO: Private/Admin - Update Product by ID
 router.route("/update/:id").put(updateProductByID);
+
+// TODO: Private/Admin - Get All Admin Products
+router.route("/admin/all").get(getAdminProducts);
+
+// TODO: FIXME: Private - Create Product Reviews
+router.route("/reviews/create").post(createProductReviews);
 
 // Export Router
 module.exports = router;
