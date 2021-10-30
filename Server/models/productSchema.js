@@ -30,11 +30,11 @@ const productSchema = new mongoose.Schema({
     {
       public_id: {
         type: String,
-        required: true,
+        required: false,
       },
       url: {
         type: String,
-        required: true,
+        required: false,
       },
     },
   ],
@@ -48,7 +48,8 @@ const productSchema = new mongoose.Schema({
   },
   seller: {
     type: String,
-    required: [true, "Please enter product seller"],
+    required: [false, "Please enter product seller"],
+    default: "Nutritiva",
   },
   stock: {
     type: Number,
@@ -65,7 +66,7 @@ const productSchema = new mongoose.Schema({
       user: {
         type: mongoose.Schema.ObjectId,
         ref: "User",
-        required: true,
+        required: false,
       },
       name: {
         type: String,
@@ -84,7 +85,7 @@ const productSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.ObjectId,
     ref: "User",
-    required: true,
+    required: false,
   },
   createdAt: {
     type: Date,

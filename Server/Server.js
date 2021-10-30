@@ -6,12 +6,23 @@ const app = express();
 const dotenv = require("dotenv");
 dotenv.config({ path: "Server/config/config.env" });
 
+// Body Parser Middleware
+const bodyParser = require("body-parser");
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+// Import the Routes
+const products = require("./routes/products");
+
 // Mongo DB Connection
 const mongoose = require("mongoose");
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => console.log("Connected to Database (MongoDB)"))
   .catch((err) => console.log(err));
+
+// Use Routes
+app.use("/products", products);
 
 // Run backend Server
 dotenv.config({ path: "Server/config/config.env" });
