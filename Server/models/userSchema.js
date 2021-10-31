@@ -4,7 +4,6 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 
-
 const userSchema = new mongoose.Schema({
   firstName: {
     type: String,
@@ -69,7 +68,7 @@ userSchema.methods.comparePassword = async function (enteredPassword) {
 // Return JWT token
 userSchema.methods.getJwtToken = function () {
   return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRESTIME,
+    expiresIn: (Date.now() + (86_400_000 * 2)),
   });
 };
 
