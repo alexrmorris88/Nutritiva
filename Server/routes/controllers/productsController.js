@@ -4,7 +4,6 @@ const ErrorHandler = require("../../errorHandling/ErrorHandler");
 const asyncErrors = require("../../errorHandling/aysncErrors");
 
 // note: add these routes in:
-// todo: createProductReview,
 // todo: getProductReviews,
 // todo: deleteReview,
 
@@ -12,6 +11,9 @@ const asyncErrors = require("../../errorHandling/aysncErrors");
 // @desc    Create New Product
 // @access  Private/Admin
 exports.newProduct = asyncErrors(async (req, res, next) => {
+
+  req.body.user = req.user.id
+
   const product = await Product.create(req.body)
     .then((product) =>
       res.status(201).json({
@@ -131,8 +133,93 @@ exports.getAdminProducts = asyncErrors(async (req, res, next) => {
 
 // @route   POST /products/reviews/create
 // @desc    Create Product Reviews
-// FIXME: @access  Private
+// @access  Private
 exports.createProductReviews = asyncErrors(async (req, res, next) => {
 
+  const { rating, comment, productId } = req.body
 
+  const review = {
+    user: req.user._id,
+    firstName: req.user.firstName,
+    lastName: req.user.lastName,
+    rating: Number(rating),
+    comment,
+  };
+
+  const product = await Product.findById(productId);
+
+  const isReviewed = product.reviews.find(
+    (r) => r.user.toString() === req.user._id.toString()
+  );
+
+  if (isReviewed) {
+    product.reviews.forEach((review) => {
+      if (review.user.toString() === req.user._id.toString()) {
+        review.comment = comment;
+        review.rating = rating;
+      }
+    });
+  } else {
+    product.reviews.push(review);
+    product.numOfReviews = product.reviews.length;
+  }
+
+  product.ratings =
+    product.reviews.reduce((acc, item) => item.rating + acc, 0) /
+    product.reviews.length;
+
+  await product.save({ validateBeforeSave: false });
+
+  res.status(200).json({
+    success: true,
+    rating,
+    comment
+  });
+});
+
+// @route   GET /products/review
+// @desc    Get Product Reviews by ID
+// @access  Private
+exports.getProductReviews = asyncErrors(async (req, res, next) => {
+  const product = await Product.findById(req.params.id);
+
+  res.status(200).json({
+    success: true,
+    reviews: product.reviews,
+  });
+});
+
+// @route   DELETE /products/review
+// @desc    Delete Product Reviews by ID
+// @access  Private
+exports.deleteReview = asyncErrors(async (req, res, next) => {
+  const product = await Product.findById(req.query.productId);
+
+  const reviews = product.reviews.filter(
+    (review) => review._id.toString() !== req.query.id.toString()
+  );
+
+  const numOfReviews = reviews.length;
+
+  const ratings =
+    product.reviews.reduce((acc, item) => item.rating + acc, 0) /
+    reviews.length;
+
+  await Product.findByIdAndUpdate(
+    req.query.productId,
+    {
+      reviews,
+      ratings,
+      numOfReviews,
+    },
+    {
+      new: true,
+      runValidators: true,
+      useFindAndModify: false,
+    }
+  );
+
+  res.status(200).json({
+    success: true,
+  });
 });

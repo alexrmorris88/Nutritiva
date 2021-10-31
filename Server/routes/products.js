@@ -11,10 +11,14 @@ const {
   updateProductByID,
   getAdminProducts,
   createProductReviews,
+  getProductReviews,
+  deleteReview,
 } = require("./controllers/productsController");
 
 // Private/Admin - New Product
-router.route("/new").post(isAuthenticatedUser, authorizeRoles("admin"), newProduct);
+router
+  .route("/new")
+  .post(isAuthenticatedUser, authorizeRoles("admin"), newProduct);
 
 // All Products
 router.route("/all").get(allProducts);
@@ -23,16 +27,31 @@ router.route("/all").get(allProducts);
 router.route("/:id").get(getProductByID);
 
 // Private/Admin - Delete Product by ID
-router.route("/delete/:id").delete(isAuthenticatedUser, authorizeRoles("admin"), deleteProduct);
+router
+  .route("/delete/:id")
+  .delete(isAuthenticatedUser, authorizeRoles("admin"), deleteProduct);
 
 // Private/Admin - Update Product by ID
-router.route("/update/:id").put(isAuthenticatedUser, authorizeRoles("admin"), updateProductByID);
+router
+  .route("/update/:id")
+  .put(isAuthenticatedUser, authorizeRoles("admin"), updateProductByID);
 
 // Private/Admin - Get All Admin Products
-router.route("/admin/all").get(isAuthenticatedUser, authorizeRoles("admin"), getAdminProducts);
+router
+  .route("/admin/all")
+  .get(isAuthenticatedUser, authorizeRoles("admin"), getAdminProducts);
 
-// FIXME: Private - Create Product Reviews
+// Private - Create Product Reviews
 router.route("/reviews/create").post(isAuthenticatedUser, createProductReviews);
+
+// Private - Create Product Reviews
+router.route("/reviews/create").put(isAuthenticatedUser, createProductReviews);
+
+// Private - Create/Delete Product Reviews
+router.route("/reviews/:id").get(isAuthenticatedUser, getProductReviews);
+
+// Private - Delete Product Reviews
+router.route("/reviews").delete(isAuthenticatedUser, deleteReview);
 
 // Export Router
 module.exports = router;
