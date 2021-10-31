@@ -3,10 +3,6 @@ const Product = require("../../models/productSchema");
 const ErrorHandler = require("../../errorHandling/ErrorHandler");
 const asyncErrors = require("../../errorHandling/aysncErrors");
 
-// note: add these routes in:
-// todo: getProductReviews,
-// todo: deleteReview,
-
 // @route   POST /products/new
 // @desc    Create New Product
 // @access  Private/Admin
