@@ -5,21 +5,33 @@ const router = express.Router();
 const {
   newUser,
   getAllUsers,
+  getUserByID,
   updateUser,
   deleteUserByID,
+  login,
+  logout,
 } = require("./controllers/userController");
 
 // New User
-router.route("/new").post(newUser);
+router.route("/register").post(newUser);
 
 // TODO: Private/Admin - Get All User
-router.route("/all").get(getAllUsers);
+router.route("/search").get(getAllUsers);
 
-// TODO: Private - Update User b y ID
+// TODO: Private/Admin - Get All User
+router.route("/search/:id").get(getUserByID);
+
+// TODO: Private - Update User by ID
 router.route("/update/:id").put(updateUser);
 
-// TODO: Private\Admin - Update User b y ID
+// TODO: Private\Admin - Update User by ID
 router.route("/delete/:id").delete(deleteUserByID);
+
+// Login User
+router.route("/login").post(login);
+
+// Logout User
+router.route("/logout").get(logout);
 
 // Export Router
 module.exports = router;

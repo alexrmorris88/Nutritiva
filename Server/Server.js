@@ -15,6 +15,10 @@ app.use(bodyParser.json());
 const products = require("./routes/products");
 const users = require("./routes/users");
 
+// Error Middleware
+const errorMiddleware = require("./errorHandling/errorMiddleware");
+app.use(errorMiddleware);
+
 // Mongo DB Connection
 const mongoose = require("mongoose");
 mongoose

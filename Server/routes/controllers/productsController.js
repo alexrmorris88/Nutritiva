@@ -1,7 +1,7 @@
 const Product = require("../../models/productSchema");
 // TODO: const productFeatures = require("../../utils/productFeatures");
 // TODO: const ErrorHandler = require("../../validations/errorHandler");
-// TODO: const asyncErrors = require("../../validations/asyncErrors");
+const asyncErrors = require("../../errorHandling/aysncErrors");
 
 // note: add these routes in:
 // todo: createProductReview,
@@ -11,7 +11,7 @@ const Product = require("../../models/productSchema");
 // @route   POST /products/new
 // @desc    Create New Product
 // TODO: @access  Private/Admin
-exports.newProduct = async (req, res, next) => {
+exports.newProduct = asyncErrors(async (req, res, next) => {
   const product = await Product.create(req.body)
     .then((product) =>
       res.status(201).json({
@@ -20,12 +20,12 @@ exports.newProduct = async (req, res, next) => {
       })
     )
     .catch((err) => res.status(404).json(err.message));
-};
+});
 
 // @route   GET /products/all
 // @desc    Display All Products
 // @access  Public
-exports.allProducts = async (req, res, next) => {
+exports.allProducts = asyncErrors(async (req, res, next) => {
   const product = await Product.find()
     .then((product) =>
       res.status(201).json({
@@ -34,12 +34,12 @@ exports.allProducts = async (req, res, next) => {
       })
     )
     .catch((err) => res.status(404).json(err.message));
-};
+});
 
 // @route   GET /products/:id
 // @desc    Get Product by ID
 // @access  Public
-exports.getProductByID = async (req, res, next) => {
+exports.getProductByID = asyncErrors(async (req, res, next) => {
   const product = await Product.findById(req.params.id).catch((err) =>
     res.status(404).json(err.message)
   );
@@ -57,12 +57,12 @@ exports.getProductByID = async (req, res, next) => {
     success: true,
     product,
   });
-};
+});
 
 // @route   DELETE /products/delete/:id
 // @desc    Display All Products
 // TODO: @access  Private/Admin
-exports.deleteProduct = async (req, res, next) => {
+exports.deleteProduct = asyncErrors(async (req, res, next) => {
   const product = await Product.findById(req.params.id).catch((err) =>
     res.status(404).json(err.message)
   );
@@ -82,12 +82,12 @@ exports.deleteProduct = async (req, res, next) => {
     success: true,
     message: "Product successfully deleted",
   });
-};
+});
 
 // @route   PUT /products/update/:id
 // @desc    Update Product by ID
 // TODO: @access  Private/Admin
-exports.updateProductByID = async (req, res, next) => {
+exports.updateProductByID = asyncErrors(async (req, res, next) => {
   let product = await Product.findById(req.params.id).catch((err) =>
     res.status(404).json(err.message)
   );
@@ -113,12 +113,12 @@ exports.updateProductByID = async (req, res, next) => {
       })
     )
     .catch((err) => res.status(404).json(err.message));
-};
+});
 
 // @route   GET /products/admin/all/
 // @desc    Update Product by ID
 // TODO: @access  Private/Admin
-exports.getAdminProducts = async (req, res, next) => {
+exports.getAdminProducts = asyncErrors(async (req, res, next) => {
   let product = await Product.find()
     .then((product) =>
       res.status(200).json({
@@ -127,12 +127,12 @@ exports.getAdminProducts = async (req, res, next) => {
       })
     )
     .catch((err) => res.status(404).json(err.message));
-};
+});
 
 // @route   POST /products/reviews/create
 // @desc    Create Product Reviews
 // TODO: FIXME: @access  Private
-exports.createProductReviews = async (req, res, next) => {
+exports.createProductReviews = asyncErrors(async (req, res, next) => {
 
 
-};
+});
