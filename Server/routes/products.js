@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const { isAuthenticatedUser, authorizeRoles } = require("../utils/authCheck");
 
 // importing function from the controller
 const {
@@ -12,8 +13,8 @@ const {
   createProductReviews,
 } = require("./controllers/productsController");
 
-// TODO: Private/Admin - New Product
-router.route("/new").post(newProduct);
+// Private/Admin - New Product
+router.route("/new").post(isAuthenticatedUser, authorizeRoles("admin"), newProduct);
 
 // All Products
 router.route("/all").get(allProducts);
@@ -21,17 +22,17 @@ router.route("/all").get(allProducts);
 // Get Product by ID
 router.route("/:id").get(getProductByID);
 
-// TODO: Private/Admin - Delete Product by ID
-router.route("/delete/:id").delete(deleteProduct);
+// Private/Admin - Delete Product by ID
+router.route("/delete/:id").delete(isAuthenticatedUser, authorizeRoles("admin"), deleteProduct);
 
-// TODO: Private/Admin - Update Product by ID
-router.route("/update/:id").put(updateProductByID);
+// Private/Admin - Update Product by ID
+router.route("/update/:id").put(isAuthenticatedUser, authorizeRoles("admin"), updateProductByID);
 
-// TODO: Private/Admin - Get All Admin Products
-router.route("/admin/all").get(getAdminProducts);
+// Private/Admin - Get All Admin Products
+router.route("/admin/all").get(isAuthenticatedUser, authorizeRoles("admin"), getAdminProducts);
 
-// TODO: FIXME: Private - Create Product Reviews
-router.route("/reviews/create").post(createProductReviews);
+// FIXME: Private - Create Product Reviews
+router.route("/reviews/create").post(isAuthenticatedUser, createProductReviews);
 
 // Export Router
 module.exports = router;

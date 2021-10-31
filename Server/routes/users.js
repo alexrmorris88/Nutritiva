@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const { isAuthenticatedUser, authorizeRoles } = require("../utils/authCheck");
 
 // importing function from the controller
 const {
@@ -15,17 +16,23 @@ const {
 // New User
 router.route("/register").post(newUser);
 
-// TODO: Private/Admin - Get All User
-router.route("/search").get(getAllUsers);
+// Private/Admin - Get All User
+router
+  .route("/search")
+  .get(isAuthenticatedUser, authorizeRoles("admin"), getAllUsers);
 
-// TODO: Private/Admin - Get All User
-router.route("/search/:id").get(getUserByID);
+// Private/Admin - Get All User
+router
+  .route("/search/:id")
+  .get(isAuthenticatedUser, authorizeRoles("admin"), getUserByID);
 
-// TODO: Private - Update User by ID
-router.route("/update/:id").put(updateUser);
+// Private - Update User by ID
+router.route("/update/:id").put(isAuthenticatedUser, updateUser);
 
-// TODO: Private\Admin - Update User by ID
-router.route("/delete/:id").delete(deleteUserByID);
+// Private\Admin - Update User by ID
+router
+  .route("/delete/:id")
+  .delete(isAuthenticatedUser, authorizeRoles("admin"), deleteUserByID);
 
 // Login User
 router.route("/login").post(login);

@@ -11,6 +11,10 @@ const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+// Cookie Parser
+const cookieParser = require("cookie-parser");
+app.use(cookieParser());
+
 // Import the Routes
 const products = require("./routes/products");
 const users = require("./routes/users");

@@ -1,6 +1,6 @@
 const Product = require("../../models/productSchema");
-// TODO: const productFeatures = require("../../utils/productFeatures");
-// TODO: const ErrorHandler = require("../../validations/errorHandler");
+// const productFeatures = require("../../utils/productFeatures");
+const ErrorHandler = require("../../errorHandling/ErrorHandler");
 const asyncErrors = require("../../errorHandling/aysncErrors");
 
 // note: add these routes in:
@@ -10,7 +10,7 @@ const asyncErrors = require("../../errorHandling/aysncErrors");
 
 // @route   POST /products/new
 // @desc    Create New Product
-// TODO: @access  Private/Admin
+// @access  Private/Admin
 exports.newProduct = asyncErrors(async (req, res, next) => {
   const product = await Product.create(req.body)
     .then((product) =>
@@ -61,7 +61,7 @@ exports.getProductByID = asyncErrors(async (req, res, next) => {
 
 // @route   DELETE /products/delete/:id
 // @desc    Display All Products
-// TODO: @access  Private/Admin
+// @access  Private/Admin
 exports.deleteProduct = asyncErrors(async (req, res, next) => {
   const product = await Product.findById(req.params.id).catch((err) =>
     res.status(404).json(err.message)
@@ -86,7 +86,7 @@ exports.deleteProduct = asyncErrors(async (req, res, next) => {
 
 // @route   PUT /products/update/:id
 // @desc    Update Product by ID
-// TODO: @access  Private/Admin
+// @access  Private/Admin
 exports.updateProductByID = asyncErrors(async (req, res, next) => {
   let product = await Product.findById(req.params.id).catch((err) =>
     res.status(404).json(err.message)
@@ -117,7 +117,7 @@ exports.updateProductByID = asyncErrors(async (req, res, next) => {
 
 // @route   GET /products/admin/all/
 // @desc    Update Product by ID
-// TODO: @access  Private/Admin
+// @access  Private/Admin
 exports.getAdminProducts = asyncErrors(async (req, res, next) => {
   let product = await Product.find()
     .then((product) =>
@@ -131,7 +131,7 @@ exports.getAdminProducts = asyncErrors(async (req, res, next) => {
 
 // @route   POST /products/reviews/create
 // @desc    Create Product Reviews
-// TODO: FIXME: @access  Private
+// FIXME: @access  Private
 exports.createProductReviews = asyncErrors(async (req, res, next) => {
 
 

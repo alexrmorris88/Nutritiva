@@ -34,7 +34,7 @@ exports.newUser = asyncErrors(async (req, res, next) => {
 
 // @route   GET /users/all
 // @desc    Get All Users
-// TODO: @access  Private/Admin
+// @access  Private/Admin
 exports.getAllUsers = asyncErrors(async (req, res, next) => {
   const users = await Users.find()
     .then((users) =>
@@ -55,7 +55,7 @@ exports.getAllUsers = asyncErrors(async (req, res, next) => {
 
 // @route   GET /users/search/:id
 // @desc    Get User by ID
-// TODO: @access  Private (Or provate\Admin?)
+// @access  Private (Or provate\Admin?)
 exports.getUserByID = asyncErrors(async (req, res, next) => {
   const users = await Users.findById(req.params.id)
     .then((users) =>
@@ -69,7 +69,7 @@ exports.getUserByID = asyncErrors(async (req, res, next) => {
 
 // @route   PUT /users/update/:id
 // @desc    Update User by ID
-// TODO: @access  Private
+// @access  Private
 exports.updateUser = asyncErrors(async (req, res, next) => {
   let users = await Users.findById(req.params.id).catch((err) =>
     res.status(404).json(err.message)
@@ -100,7 +100,7 @@ exports.updateUser = asyncErrors(async (req, res, next) => {
 
 // @route   DELETE /users/delete/:id
 // @desc    Delete User by ID
-// TODO: @access  Private\Admin
+// @access  Private\Admin
 exports.deleteUserByID = asyncErrors(async (req, res, next) => {
   let users = await Users.findById(req.params.id).catch((err) =>
     res.status(404).json(err.message)
