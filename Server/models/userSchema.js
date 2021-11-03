@@ -27,6 +27,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please enter a password"],
     minlength: [6, "Your password must be at least 6 characters"],
+    validate: [validator.isStrongPassword, "Password must be at least 8 characters. Must contain at least: 1 lower case, 1 upper case, 1 number, 1 symbol"],
     select: false,
   },
   avatar: {
@@ -53,12 +54,13 @@ const userSchema = new mongoose.Schema({
 
 // Encrypt the Password before Saving the user
 userSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) {
+  if (!this.isModified("password") || !this.isModified("password")) {
     next();
   }
 
   this.password = await bcrypt.hash(this.password, 10);
 });
+
 
 // Compare user Password
 userSchema.methods.comparePassword = async function (enteredPassword) {
@@ -68,7 +70,7 @@ userSchema.methods.comparePassword = async function (enteredPassword) {
 // Return JWT token
 userSchema.methods.getJwtToken = function () {
   return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
-    expiresIn: (Date.now() + (86_400_000 * 2)),
+    expiresIn: Date.now() + 86_400_000 * 2,
   });
 };
 

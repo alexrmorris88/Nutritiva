@@ -173,7 +173,7 @@ exports.createProductReviews = asyncErrors(async (req, res, next) => {
   });
 });
 
-// @route   GET /products/review
+// @route   GET /products/reviews/:id
 // @desc    Get Product Reviews by ID
 // @access  Private
 exports.getProductReviews = asyncErrors(async (req, res, next) => {
@@ -185,7 +185,7 @@ exports.getProductReviews = asyncErrors(async (req, res, next) => {
   });
 });
 
-// @route   DELETE /products/review
+// @route   DELETE /products/reviews
 // @desc    Delete Product Reviews by ID
 // @access  Private
 exports.deleteReview = asyncErrors(async (req, res, next) => {

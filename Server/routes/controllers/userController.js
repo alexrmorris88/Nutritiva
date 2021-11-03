@@ -2,34 +2,41 @@ const Users = require("../../models/userSchema");
 const asyncErrors = require("../../errorHandling/aysncErrors");
 const ErrorHandler = require("../../errorHandling/ErrorHandler");
 const sendToken = require("../../utils/jwtTokenCookie");
-const crypto = require("crypto");
 
 // note: add user routes
 // todo: forgot password
 // todo: reset password
 // todo: update password
-// todo: get user profile
-// todo: update User Profile
-// todo: get user details
+
 
 // @route   POST /users/new
 // @desc    Create New User
 // @access  Public
 exports.newUser = asyncErrors(async (req, res, next) => {
+  const { firstName, lastName, email, password, confirmPassword } = req.body;
+
+  if (password !== confirmPassword) {
+    return res.status(400).json({
+      success: false,
+      error: "Passwords do not match",
+    });
+  }
 
   const user = await Users.create({
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    email: req.body.email.toLowerCase(),
-    password: req.body.password,
+    firstName,
+    lastName,
+    email: email.toLowerCase(),
+    password,
+    confirmPassword,
   })
+    .then((user) => sendToken(user, 200, res))
     .then((user) =>
       res.status(200).json({
         success: true,
         user,
       })
     )
-    .catch((err) => res.status(404).json(err.message));
+    .catch((err) => res.status(400).json(err.message));
 });
 
 // @route   GET /users/all
@@ -39,6 +46,7 @@ exports.getAllUsers = asyncErrors(async (req, res, next) => {
   const users = await Users.find()
     .then((users) =>
       res.status(200).json({
+        Num_of_Users: users.length,
         success: true,
         users,
       })
@@ -84,7 +92,7 @@ exports.updateUser = asyncErrors(async (req, res, next) => {
     );
   }
 
-  users = await Users.findByIdAndUpdate(req.params.id, req.body, {
+  users = await Users.findByIdAndUpdate(req.user.id, req.body, {
     new: true,
     runValidators: true,
     useFindAndModify: false,
@@ -132,7 +140,7 @@ exports.deleteUserByID = asyncErrors(async (req, res, next) => {
 exports.login = asyncErrors(async (req, res, next) => {
   let { email, password } = req.body;
 
-  email = email.toLowerCase()
+  email = email.toLowerCase();
 
   // Check if email and passowrd is entered by the user
   if (!email || !password) {
@@ -167,5 +175,30 @@ exports.logout = asyncErrors(async (req, res, next) => {
   res.status(200).json({
     success: true,
     message: "Logged out",
+  });
+});
+
+// @route   GET /users/update-profile/:id
+// @desc    Update User Profile
+// @access  Public
+// todo: FIXME: need to fix this code...
+exports.updateUserProfile = asyncErrors(async (req, res, next) => {
+  const { firstName, lastName, email } = req.body;
+
+  let user = await Users.findById(req.user.id)
+
+  user = await Users.findByIdAndUpdate(
+    req.user.id,
+    { firstName, lastName, email },
+    {
+      new: true,
+      runValidators: true,
+      useFindAndModify: false,
+    }
+  );
+
+  res.status(200).json({
+    success: true,
+    user
   });
 });
