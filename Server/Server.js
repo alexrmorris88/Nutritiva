@@ -18,6 +18,7 @@ app.use(cookieParser());
 // Import the Routes
 const products = require("./routes/products");
 const users = require("./routes/users");
+const orders = require("./routes/orders");
 
 // Error Middleware
 const errorMiddleware = require("./errorHandling/errorMiddleware");
@@ -33,6 +34,7 @@ mongoose
 // Use Routes
 app.use("/products", products);
 app.use("/users", users);
+app.use("/orders", orders);
 
 // Run backend Server
 dotenv.config({ path: "Server/config/config.env" });

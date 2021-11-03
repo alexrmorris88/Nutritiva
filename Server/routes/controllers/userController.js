@@ -46,7 +46,7 @@ exports.getAllUsers = asyncErrors(async (req, res, next) => {
   const users = await Users.find()
     .then((users) =>
       res.status(200).json({
-        Num_of_Users: users.length,
+        totalUsers: users.length,
         success: true,
         users,
       })
