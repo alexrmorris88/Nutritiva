@@ -11,7 +11,7 @@ const {
   deleteUserByID,
   login,
   logout,
-  updateUserProfile
+  updateUserProfile,
 } = require("./controllers/userController");
 
 // New User
@@ -40,9 +40,6 @@ router.route("/login").post(login);
 
 // Logout User
 router.route("/logout").get(logout);
-
-// Private - update user profile
-router.route("/update-profile").put(isAuthenticatedUser, updateUserProfile);
 
 // Export Router
 module.exports = router;

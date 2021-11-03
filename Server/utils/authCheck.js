@@ -14,9 +14,10 @@ exports.isAuthenticatedUser = async (req, res, next) => {
   }
 
   // Decode the token
-  const decoded = jwt.verify(token, process.env.JWT_SECRET);
-  req.user = await User.findById(decoded.id);
-  
+  const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+
+  req.user = await User.findById(decodedToken.id);
+
   next();
 };
 
@@ -24,11 +25,13 @@ exports.isAuthenticatedUser = async (req, res, next) => {
 exports.authorizeRoles = (...roles) => {
   return (req, res, next) => {
     if (!roles.includes(req.user.roles)) {
-        return next(res.status(400).json({
+      return next(
+        res.status(400).json({
           status: false,
-          Error: "This user is not allowed to access this resource"
-        }))
+          Error: "This user is not allowed to access this resource",
+        })
+      );
     }
-    next()
-  }
-}
+    next();
+  };
+};

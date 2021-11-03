@@ -8,13 +8,13 @@ const sendToken = require("../../utils/jwtTokenCookie");
 // todo: reset password
 // todo: update password
 
-
 // @route   POST /users/new
 // @desc    Create New User
 // @access  Public
 exports.newUser = asyncErrors(async (req, res, next) => {
   const { firstName, lastName, email, password, confirmPassword } = req.body;
 
+  // Check if Confirm Password Matches
   if (password !== confirmPassword) {
     return res.status(400).json({
       success: false,
@@ -138,26 +138,77 @@ exports.deleteUserByID = asyncErrors(async (req, res, next) => {
 // @desc    Loggin with Auth Token
 // @access  Public
 exports.login = asyncErrors(async (req, res, next) => {
-  let { email, password } = req.body;
+  let { email, password, confirmPassword } = req.body;
 
-  email = email.toLowerCase();
-
-  // Check if email and passowrd is entered by the user
-  if (!email || !password) {
-    return next(new ErrorHandler("Please enter username or password", 404));
+  // Check to see if email or passowrds hasn't been entered
+  if (!email || !password || !confirmPassword) {
+    return next(
+      res
+        .cookie("token", null, {
+          expires: new Date(Date.now()),
+          httpOnly: true,
+        })
+        .status(400)
+        .json({
+          success: false,
+          error: "Please enter username or password",
+        })
+    );
   }
+
+  // Check if Confirm Password Matches, if not, remove token
+  if (password !== confirmPassword) {
+    return next(
+      res
+        .cookie("token", null, {
+          expires: new Date(Date.now()),
+          httpOnly: true,
+        })
+        .status(400)
+        .json({
+          success: false,
+          error: "Passwords do not match",
+        })
+    );
+  }
+
+  // Set email to lowercase
+  email = email.toLowerCase();
 
   // Finding the user in the database
   const user = await Users.findOne({ email }).select("+password");
 
+  // Check is User name (email) is valid
   if (!user) {
-    return next(new ErrorHandler("Invalid email or password", 400));
+    return next(
+      res
+        .cookie("token", null, {
+          expires: new Date(Date.now()),
+          httpOnly: true,
+        })
+        .status(404)
+        .json({
+          success: false,
+          error: "Invalid email or password",
+        })
+    );
   }
 
   // Check if password is correct or not
   const isPasswordMatch = await user.comparePassword(password);
   if (!isPasswordMatch) {
-    return next(new ErrorHandler("Invalid email or password", 404));
+    return next(
+      res
+        .cookie("token", null, {
+          expires: new Date(Date.now()),
+          httpOnly: true,
+        })
+        .status(404)
+        .json({
+          success: false,
+          error: "Invalid email or password",
+        })
+    );
   }
 
   sendToken(user, 200, res);
@@ -175,30 +226,5 @@ exports.logout = asyncErrors(async (req, res, next) => {
   res.status(200).json({
     success: true,
     message: "Logged out",
-  });
-});
-
-// @route   GET /users/update-profile/:id
-// @desc    Update User Profile
-// @access  Public
-// todo: FIXME: need to fix this code...
-exports.updateUserProfile = asyncErrors(async (req, res, next) => {
-  const { firstName, lastName, email } = req.body;
-
-  let user = await Users.findById(req.user.id)
-
-  user = await Users.findByIdAndUpdate(
-    req.user.id,
-    { firstName, lastName, email },
-    {
-      new: true,
-      runValidators: true,
-      useFindAndModify: false,
-    }
-  );
-
-  res.status(200).json({
-    success: true,
-    user
   });
 });
