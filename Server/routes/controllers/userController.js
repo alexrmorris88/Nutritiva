@@ -2,11 +2,12 @@ const Users = require("../../models/userSchema");
 const asyncErrors = require("../../errorHandling/aysncErrors");
 const ErrorHandler = require("../../errorHandling/ErrorHandler");
 const sendToken = require("../../utils/jwtTokenCookie");
+const sendEmail = require("../../utils/sendEmail");
+const crypto = require("crypto");
 
 // note: add user routes
 // todo: forgot password
 // todo: reset password
-// todo: update password
 
 // @route   POST /users/new
 // @desc    Create New User
@@ -227,4 +228,131 @@ exports.logout = asyncErrors(async (req, res, next) => {
     success: true,
     message: "Logged out",
   });
+});
+
+// @route   PUT /users/update-password
+// @desc    Update user password
+// @access  Private
+exports.updatePassword = asyncErrors(async (req, res, next) => {
+  let { password, confirmPassword, oldPassword } = req.body;
+
+  // Check to see if the passwords match
+  if (password !== confirmPassword) {
+    return next(
+      res.status(400).json({
+        success: false,
+        error: "Passwords do not match",
+      })
+    );
+  }
+
+  // Check to see if the old password is the same as the new password
+  if (password === oldPassword) {
+    return next(
+      res.status(400).json({
+        success: false,
+        error: "Cannot use old password as new password",
+      })
+    );
+  }
+  user = await Users.findById(req.user.id).select("+password");
+
+  // Check previous user password
+  const isMatched = await user.comparePassword(req.body.oldPassword);
+  if (!isMatched) {
+    return next(new ErrorHandler("Old password is incorrect"));
+  }
+
+  user.password = req.body.password;
+
+  await user.save();
+
+  sendToken(user, 200, res);
+});
+
+// @route   PUT /users/forgot-password
+// @desc    Forgot password
+// @access  Public
+exports.forgotPassword = asyncErrors(async (req, res, next) => {
+  const { email } = req.body;
+
+  const user = await Users.findOne({ email });
+
+  // Check if user exists
+  if (!user) {
+    return next(new ErrorHandler("User not found with this email", 404));
+  }
+
+  // Get reset token
+  const resetToken = user.getResetPasswordToken();
+
+  // todo: findout why we do not validate before save?
+  await user.save({ validateBeforeSave: false });
+
+  // Create reset password url
+  const resetUrl = `${req.protocol}://${req.get(
+    "host"
+  )}/users/reset-password/${resetToken}`;
+
+  // Nodemailer message
+  const message = `Your password reset token is as follow:\n\n${resetUrl}\n\nIf you have not requested this email, then ignore it.`;
+
+  try {
+    await sendEmail({
+      email: user.email,
+      subject: "Nutritiva Password Recovery",
+      message,
+    });
+
+    res.status(200).json({
+      success: true,
+      message: `Email sent to: ${user.email}`,
+    });
+  } catch (error) {
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpire = undefined;
+
+    await user.save({ validateBeforeSave: false });
+
+    return next(new ErrorHandler(error.message, 500));
+  }
+});
+
+// @route   PUT /users/reset-password/:token
+// @desc    Reset password
+// @access  Public
+exports.resetPassword = asyncErrors(async (req, res, next) => {
+  // Hash URL token
+  const resetPasswordToken = crypto
+    .createHash("sha256")
+    .update(req.params.token)
+    .digest("hex");
+
+  const user = await User.findOne({
+    resetPasswordToken,
+    resetPasswordExpire: { $gt: Date.now() },
+  });
+
+  if (!user) {
+    return next(
+      new ErrorHandler(
+        "Password reset token is invalid or has been expired",
+        400
+      )
+    );
+  }
+
+  if (req.body.password !== req.body.confirmPassword) {
+    return next(new ErrorHandler("Password does not match", 400));
+  }
+
+  // Setup new password
+  user.password = req.body.password;
+
+  user.resetPasswordToken = undefined;
+  user.resetPasswordExpire = undefined;
+
+  await user.save();
+
+  sendToken(user, 200, res);
 });

@@ -11,7 +11,9 @@ const {
   deleteUserByID,
   login,
   logout,
-  updateUserProfile,
+  updatePassword,
+  forgotPassword,
+  resetPassword,
 } = require("./controllers/userController");
 
 // New User
@@ -40,6 +42,15 @@ router.route("/login").post(login);
 
 // Logout User
 router.route("/logout").get(logout);
+
+// Private - Update Password
+router.route("/update-password").put(isAuthenticatedUser,updatePassword);
+
+// Forgot Password
+router.route("/forgot-password").post(forgotPassword);
+
+// Reset Password
+router.route("/reset-password/:token").put(resetPassword);
 
 // Export Router
 module.exports = router;
