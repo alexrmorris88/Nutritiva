@@ -118,14 +118,17 @@ exports.updateProductByID = asyncErrors(async (req, res, next) => {
 // @desc    Update Product by ID
 // @access  Private/Admin
 exports.getAdminProducts = asyncErrors(async (req, res, next) => {
-  let product = await Product.find()
-    .then((product) =>
-      res.status(200).json({
-        success: true,
-        product,
-      })
-    )
-    .catch((err) => res.status(404).json(err.message));
+  const productApiFeatures = new productAPIFeatures(Product.find(), req.query)
+    .search()
+    .filter()
+    .pagination(8);
+
+  const product = await productApiFeatures.query;
+
+  res.status(200).json({
+    success: true,
+    product,
+  });
 });
 
 // @route   POST /products/reviews/create
