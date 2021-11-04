@@ -1,14 +1,12 @@
 const Product = require("../../models/productSchema");
-// const productFeatures = require("../../utils/productFeatures");
-const ErrorHandler = require("../../errorHandling/ErrorHandler");
+const productAPIFeatures = require("../../utils/productAPIFeatures");
 const asyncErrors = require("../../errorHandling/aysncErrors");
 
 // @route   POST /products/new
 // @desc    Create New Product
 // @access  Private/Admin
 exports.newProduct = asyncErrors(async (req, res, next) => {
-
-  req.body.user = req.user.id
+  req.body.user = req.user.id;
 
   const product = await Product.create(req.body)
     .then((product) =>
@@ -131,8 +129,7 @@ exports.getAdminProducts = asyncErrors(async (req, res, next) => {
 // @desc    Create Product Reviews
 // @access  Private
 exports.createProductReviews = asyncErrors(async (req, res, next) => {
-
-  const { rating, comment, productId } = req.body
+  const { rating, comment, productId } = req.body;
 
   const review = {
     user: req.user._id,
@@ -169,7 +166,7 @@ exports.createProductReviews = asyncErrors(async (req, res, next) => {
   res.status(200).json({
     success: true,
     rating,
-    comment
+    comment,
   });
 });
 
