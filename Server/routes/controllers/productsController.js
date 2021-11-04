@@ -22,14 +22,17 @@ exports.newProduct = asyncErrors(async (req, res, next) => {
 // @desc    Display All Products
 // @access  Public
 exports.allProducts = asyncErrors(async (req, res, next) => {
-  const product = await Product.find()
-    .then((product) =>
-      res.status(201).json({
-        success: true,
-        product,
-      })
-    )
-    .catch((err) => res.status(404).json(err.message));
+  const productApiFeatures = new productAPIFeatures(Product.find(), req.query)
+    .search()
+    .filter()
+    .pagination(8);
+
+  const product = await productApiFeatures.query;
+
+  res.status(201).json({
+    success: true,
+    product,
+  });
 });
 
 // @route   GET /products/:id
