@@ -4,10 +4,7 @@ const ErrorHandler = require("../../errorHandling/ErrorHandler");
 const sendToken = require("../../utils/jwtTokenCookie");
 const sendEmail = require("../../utils/sendEmail");
 const crypto = require("crypto");
-
-// note: add user routes
-// todo: forgot password
-// todo: reset password
+const APIFeatures = require("../../utils/APIFeatures");
 
 // @route   POST /users/new
 // @desc    Create New User
@@ -44,15 +41,18 @@ exports.newUser = asyncErrors(async (req, res, next) => {
 // @desc    Get All Users
 // @access  Private/Admin
 exports.getAllUsers = asyncErrors(async (req, res, next) => {
-  const users = await Users.find()
-    .then((users) =>
-      res.status(200).json({
-        totalUsers: users.length,
-        success: true,
-        users,
-      })
-    )
-    .catch((err) => res.status(404).json(err.message));
+  const ApiFeatures = new APIFeatures(Users.find(), req.query)
+    .searchUserByEmail()
+    .filter()
+    .pagination(8);
+
+  const users = await ApiFeatures.query;
+
+  res.status(200).json({
+    UsersPerPage: users.length,
+    success: true,
+    users,
+  });
 
   if (!users) {
     return res.status(404).json({

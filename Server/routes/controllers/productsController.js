@@ -1,5 +1,5 @@
 const Product = require("../../models/productSchema");
-const productAPIFeatures = require("../../utils/productAPIFeatures");
+const APIFeatures = require("../../utils/APIFeatures");
 const asyncErrors = require("../../errorHandling/aysncErrors");
 
 // @route   POST /products/new
@@ -22,12 +22,12 @@ exports.newProduct = asyncErrors(async (req, res, next) => {
 // @desc    Display All Products
 // @access  Public
 exports.allProducts = asyncErrors(async (req, res, next) => {
-  const productApiFeatures = new productAPIFeatures(Product.find(), req.query)
+  const ApiFeatures = new APIFeatures(Product.find(), req.query)
     .search()
     .filter()
     .pagination(8);
 
-  const product = await productApiFeatures.query;
+  const product = await ApiFeatures.query;
 
   res.status(201).json({
     success: true,
@@ -118,12 +118,12 @@ exports.updateProductByID = asyncErrors(async (req, res, next) => {
 // @desc    Update Product by ID
 // @access  Private/Admin
 exports.getAdminProducts = asyncErrors(async (req, res, next) => {
-  const productApiFeatures = new productAPIFeatures(Product.find(), req.query)
+  const ApiFeatures = new APIFeatures(Product.find(), req.query)
     .search()
     .filter()
     .pagination(8);
 
-  const product = await productApiFeatures.query;
+  const product = await ApiFeatures.query;
 
   res.status(200).json({
     success: true,
