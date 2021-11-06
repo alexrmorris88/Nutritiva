@@ -10,20 +10,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { registerUser, clearErrors } from "../../state/actions/userActions";
 
 const Register = ({ history }) => {
-  const [user, setUser] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
-
-  const { firstName, lastName, email, password, confirmPassword } = user;
-
-  // const [avatar, setAvatar] = useState("");
-  // const [avatarPreview, setAvatarPreview] = useState(
-  //   "/images/default_avatar.jpg"
-  // );
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const alert = useAlert();
   const dispatch = useDispatch();
@@ -57,11 +48,6 @@ const Register = ({ history }) => {
     dispatch(registerUser(formData));
   };
 
-  const onChange = (e) => {
-
-      setUser({ ...user, [e.target.name]: e.target.value })
-  };
-
   return (
     <Fragment>
       <MetaData title={"Register"} />
@@ -83,7 +69,7 @@ const Register = ({ history }) => {
                 className="form-control"
                 name="firstName"
                 value={firstName}
-                onChange={onChange}
+                onChange={e => setFirstName(e.target.value)}
               />
             </div>
 
@@ -95,7 +81,7 @@ const Register = ({ history }) => {
                 className="form-control"
                 name="lastName"
                 value={lastName}
-                onChange={onChange}
+                onChange={e => setLastName(e.target.value)}
               />
             </div>
 
@@ -107,7 +93,7 @@ const Register = ({ history }) => {
                 className="form-control"
                 name="email"
                 value={email}
-                onChange={onChange}
+                onChange={e => setEmail(e.target.value)}
               />
             </div>
 
@@ -119,7 +105,7 @@ const Register = ({ history }) => {
                 className="form-control"
                 name="password"
                 value={password}
-                onChange={onChange}
+                onChange={e => setPassword(e.target.value)}
               />
             </div>
 
@@ -131,7 +117,7 @@ const Register = ({ history }) => {
                 className="form-control"
                 name="confirmPassword"
                 value={confirmPassword}
-                onChange={onChange}
+                onChange={e => setConfirmPassword(e.target.value)}
               />
             </div>
 

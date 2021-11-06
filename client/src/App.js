@@ -8,6 +8,7 @@ import Home from "./components/Home";
 
 // User Components
 import Register from "./components/user/Register";
+import Login from "./components/user/Login";
 
 function App() {
   return (
@@ -17,7 +18,10 @@ function App() {
         <div className="container container-fluid">
           <Routes>
             <Route path="/" element={<Home />} exact />
-            <Route path="/users/register" element={<Register />} exact />
+            <Route path="/register" element={<Register />} 
+            exact />
+            <Route path="/login" element={<Login />} 
+            exact />
           </Routes>
         </div>
         <Footer />
