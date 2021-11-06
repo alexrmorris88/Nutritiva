@@ -139,7 +139,7 @@ const Home = () => {
                   <span id="no_of_reviews">(5 Reviews)</span>
                 </div>
                 <p className="card-text">$75.56</p>
-                <Link to="#" id="view_btn" class="btn btn-block">
+                <Link to="#" id="view_btn" className="btn btn-block">
                   View Details
                 </Link>
               </div>
