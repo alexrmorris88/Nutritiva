@@ -3,6 +3,7 @@ import {
   REGISTER_USER_REQUEST,
   REGISTER_USER_SUCCESS,
   REGISTER_USER_FAIL,
+  CLEAR_ERRORS,
 } from "../constants/userConstants";
 
 // Register User
@@ -12,7 +13,7 @@ export const registerUser = (userData) => async (dispatch) => {
 
     const config = {
       headers: {
-        "Content-Type": "multipart/form-data",
+        "Content-Type": "*/*",
       },
     };
 
@@ -20,12 +21,19 @@ export const registerUser = (userData) => async (dispatch) => {
 
     dispatch({
       type: REGISTER_USER_SUCCESS,
-      payload: data.user,
+      payload: data,
     });
   } catch (error) {
     dispatch({
       type: REGISTER_USER_FAIL,
-      payload: error.response.data.message,
+      payload: error.response.data,
     });
   }
+};
+
+// Clear Errors
+export const clearErrors = () => async (dispatch) => {
+  dispatch({
+    type: CLEAR_ERRORS,
+  });
 };

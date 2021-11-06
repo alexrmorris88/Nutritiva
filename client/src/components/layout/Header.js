@@ -1,10 +1,8 @@
 // React Components
 import React, { Fragment } from "react";
-import { Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "../../App.css";
 
-// Redux
-import { useDispatch, useSelector } from "react-redux";
 
 const Header = () => {
 
@@ -13,8 +11,11 @@ const Header = () => {
       <nav className="navbar row">
         <div className="col-12 col-md-3">
           <div className="navbar-brand">
-            <Link to="#">
-              <img style={{"height": "50px", "width": "auto"}} src="/images/nutritiva_logo.png" />
+            <Link to="/">
+              <img 
+              style={{"height": "50px", "width": "auto"}} src="/images/nutritiva_logo.png"
+              alt="Nutritiva" 
+              />
             </Link>
           </div>
         </div>

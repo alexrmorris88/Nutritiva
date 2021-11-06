@@ -5,9 +5,9 @@
   "main": "Server.js",
   "scripts": {
     "start": "node Server/Server.js",
-    "server": "nodemon Server/Server.js",
+    "Server": "nodemon Server/Server.js",
     "client": "npm start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run Server\" \"npm run client\""
   },
   "repository": {
     "type": "git",

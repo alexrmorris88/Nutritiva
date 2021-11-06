@@ -26,15 +26,10 @@ exports.newUser = asyncErrors(async (req, res, next) => {
     email: email.toLowerCase(),
     password,
     confirmPassword,
-  })
-    .then((user) => sendToken(user, 200, res))
-    .then((user) =>
-      res.status(200).json({
-        success: true,
-        user,
-      })
-    )
-    .catch((err) => res.status(400).json(err.message));
+  });
+
+  sendToken(user, 200, res);
+
 });
 
 // @route   GET /users/all
