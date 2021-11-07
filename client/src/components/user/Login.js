@@ -12,7 +12,7 @@ import { login, clearErrors } from "../../state/actions/userActions";
 import Loader from "../utils/Loader";
 import MetaData from "../utils/MetaData";
 
-const Login = ({ location }) => {
+const Login = () => {
   // React State Variables
   const alert = useAlert();
   const [email, setEmail] = useState("");
@@ -41,17 +41,16 @@ const Login = ({ location }) => {
     }
   }, [dispatch, alert, isAuthenticated, error, navigate]);
 
+  // Form data to be dispatched to Actions via axios
   const submitHandler = (e) => {
     e.preventDefault();
 
-    // Form data to be submitted to API via axios
     const formData = {
       email: email,
       password: password,
       confirmPassword: confirmPassword,
     };
 
-    // Dispatch to axios on submit (in redux actions)
     dispatch(login(formData));
   };
 

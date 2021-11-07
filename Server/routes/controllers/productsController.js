@@ -22,15 +22,23 @@ exports.newProduct = asyncErrors(async (req, res, next) => {
 // @desc    Display All Products
 // @access  Public
 exports.allProducts = asyncErrors(async (req, res, next) => {
+
+  const resPerPage = 8;
+  const productsCount = await Product.countDocuments();
+
   const ApiFeatures = new APIFeatures(Product.find(), req.query)
     .search()
     .filter()
-    .pagination(8);
+    .pagination(resPerPage);
 
-  const product = await ApiFeatures.query;
+  let product = await ApiFeatures.query;
+  let filteredProductsCount = product.length;
 
   res.status(201).json({
     success: true,
+    productsCount,
+    filteredProductsCount,
+    resPerPage,
     product,
   });
 });
