@@ -2,7 +2,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAlert } from "react-alert";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 // Redux Import
 import { useDispatch, useSelector } from "react-redux";
@@ -12,10 +12,8 @@ import { login, clearErrors } from "../../state/actions/userActions";
 import Loader from "../utils/Loader";
 import MetaData from "../utils/MetaData";
 
-
 const Login = ({ location }) => {
-
-  // React Variables
+  // React State Variables
   const alert = useAlert();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -26,15 +24,18 @@ const Login = ({ location }) => {
   const { isAuthenticated, error, loading } = useSelector(
     (state) => state.user
   );
-    
+
+  // Navigate to a different page
   const navigate = useNavigate();
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate('/')
+      // if auth, auto navigate to "/"
+      navigate("/");
     }
 
     if (error) {
+      // Clear errors, if any
       alert.error(error);
       dispatch(clearErrors());
     }
@@ -42,10 +43,20 @@ const Login = ({ location }) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(login(email, password, confirmPassword));
+
+    // Form data to be submitted to API via axios
+    const formData = {
+      email: email,
+      password: password,
+      confirmPassword: confirmPassword,
+    };
+
+    // Dispatch to axios on submit (in redux actions)
+    dispatch(login(formData));
   };
 
   return (
+    // Creating the JSX form
     <Fragment>
       <MetaData title={"Login"} />
 

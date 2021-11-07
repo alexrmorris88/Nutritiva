@@ -1,37 +1,45 @@
-// React Components
+// React Components Imports
 import React, { Fragment, useState, useEffect } from "react";
 import { useAlert } from "react-alert";
 import { useNavigate } from "react-router";
 
-// Utils
+// Utils Imports
 import MetaData from "../utils/MetaData";
 
-// Redux
+// Redux Imports
 import { useDispatch, useSelector } from "react-redux";
 import { registerUser, clearErrors } from "../../state/actions/userActions";
 
 const Register = () => {
+  // Creating the form fields form the state
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  // Creating the react alert variable
   const alert = useAlert();
+
+  // Creating redux dispatch function variable
   const dispatch = useDispatch();
 
+  // Importing Auth, Error, and Loading variables from user redux reducer
   const { isAuthenticated, error, loading } = useSelector(
     (state) => state.user
   );
 
+  // Navigate to a different page 
   const navigate = useNavigate();
 
   useEffect(() => {
     if (isAuthenticated) {
+      // if auth, push to "/"
       navigate("/");
     }
 
     if (error) {
+      // clear errors if any
       alert.error(error);
       dispatch(clearErrors());
     }
@@ -40,6 +48,7 @@ const Register = () => {
   const submitHandler = (e) => {
     e.preventDefault();
 
+    // Setting the API fields with the form fields
     const formData = {
       firstName: firstName,
       lastName: lastName,
@@ -48,10 +57,12 @@ const Register = () => {
       confirmPassword: confirmPassword,
     };
 
+    // send the form data to redux actions for axios processing
     dispatch(registerUser(formData));
   };
 
   return (
+    // User JSX form 
     <Fragment>
       <MetaData title={"Register"} />
 

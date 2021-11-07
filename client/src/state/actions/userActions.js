@@ -35,7 +35,7 @@ export const registerUser = (userData) => async (dispatch) => {
 };
 
 // Login User
-export const login = (email, password, confirmPassword) => async (dispatch) => {
+export const login = (formData) => async (dispatch) => {
   try {
     dispatch({ type: LOGIN_USER_REQUEST });
 
@@ -47,7 +47,7 @@ export const login = (email, password, confirmPassword) => async (dispatch) => {
 
     const { data } = await axios.post(
       "/users/login",
-      { email, password, confirmPassword },
+      formData,
       config
     );
 
