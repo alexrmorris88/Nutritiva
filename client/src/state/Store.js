@@ -7,13 +7,17 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import { userReducer } from "./reducer/userReducer";
 
 // Products Reducers
-import { productReducer } from "./reducer/productReducer";
+import {
+  productReducer,
+  productDetailsReducer,
+} from "./reducer/productReducer";
 
 const reducers = combineReducers({
   // User Reducers
   user: userReducer,
   // Products Reducers
-  products: productReducer
+  products: productReducer,
+  productDetails: productDetailsReducer,
 });
 
 let initialState = {};
