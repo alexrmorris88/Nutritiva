@@ -2,6 +2,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAlert } from "react-alert";
+import { useNavigate } from 'react-router-dom';
 
 // Redux Import
 import { useDispatch, useSelector } from "react-redux";
@@ -11,7 +12,9 @@ import { login, clearErrors } from "../../state/actions/userActions";
 import Loader from "../utils/Loader";
 import MetaData from "../utils/MetaData";
 
-const Login = ({ history, location }) => {
+
+const Login = ({ location }) => {
+
   // React Variables
   const alert = useAlert();
   const [email, setEmail] = useState("");
@@ -23,17 +26,19 @@ const Login = ({ history, location }) => {
   const { isAuthenticated, error, loading } = useSelector(
     (state) => state.user
   );
+    
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (isAuthenticated) {
-      history.push("/");
+      navigate('/')
     }
 
     if (error) {
       alert.error(error);
       dispatch(clearErrors());
     }
-  }, [dispatch, alert, isAuthenticated, error, history]);
+  }, [dispatch, alert, isAuthenticated, error, navigate]);
 
   const submitHandler = (e) => {
     e.preventDefault();

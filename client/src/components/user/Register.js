@@ -1,6 +1,7 @@
 // React Components
 import React, { Fragment, useState, useEffect } from "react";
 import { useAlert } from "react-alert";
+import { useNavigate } from "react-router";
 
 // Utils
 import MetaData from "../utils/MetaData";
@@ -9,7 +10,7 @@ import MetaData from "../utils/MetaData";
 import { useDispatch, useSelector } from "react-redux";
 import { registerUser, clearErrors } from "../../state/actions/userActions";
 
-const Register = ({ history }) => {
+const Register = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -23,16 +24,18 @@ const Register = ({ history }) => {
     (state) => state.user
   );
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (isAuthenticated) {
-      history.push("/");
+      navigate("/");
     }
 
     if (error) {
       alert.error(error);
       dispatch(clearErrors());
     }
-  }, [dispatch, alert, isAuthenticated, error, history]);
+  }, [dispatch, alert, isAuthenticated, error, navigate]);
 
   const submitHandler = (e) => {
     e.preventDefault();
