@@ -1,5 +1,5 @@
 // React Imports
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useAlert } from "react-alert";
 
 // Redux Imports
@@ -7,13 +7,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { allProducts } from "../state/actions/productActions";
 
 // Components Import
-import Products from '../components/products/Products'
+import Products from "../components/products/Products";
 
 // Utils Imports
 import MetaData from "./utils/MetaData";
 import Loader from "./utils/Loader";
+import Pagination from "react-js-pagination";
 
 const Home = () => {
+  const [currentPage, setCurrentPage] = useState(1);
   const alert = useAlert();
   const dispatch = useDispatch();
 
@@ -25,8 +27,12 @@ const Home = () => {
     if (error) {
       return alert.error(error);
     }
-    dispatch(allProducts());
-  }, [dispatch, alert, error]);
+    dispatch(allProducts(currentPage));
+  }, [dispatch, alert, error, currentPage]);
+
+  function setCurrentPageNumber(pageNumber) {
+    setCurrentPage(pageNumber)
+  }
 
   return (
     <Fragment>
@@ -39,13 +45,26 @@ const Home = () => {
 
           <section id="products" className="container mt-5">
             <div className="row">
-
               {products.map((product) => (
                 <Products key={product._id} product={product} col={4} />
               ))}
-
             </div>
           </section>
+
+          <div className="d-flex justify-content-center mt-5">
+            <Pagination
+              activePage={currentPage}
+              itemsCountPerPage={resPerPage}
+              totalItemsCount={productsCount}
+              onChange={setCurrentPageNumber}
+              nextPageText={"Next"}
+              prevPageText={"Prev"}
+              firstPageText={"First"}
+              lastPageText={"Last"}
+              itemClass="page-item"
+              linkClass="page-link"
+            />
+          </div>
         </Fragment>
       )}
     </Fragment>
