@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 // Layout Components
@@ -13,8 +13,16 @@ import Login from "./components/user/Login";
 // Product Components
 import ProductDetails from "./components/products/productDetails";
 
+// Load user
+import { loadUser } from './state/actions/userActions'
+import store from './state/Store'
 
 function App() {
+
+  useEffect(() => {
+    store.dispatch(loadUser())
+  }, [])
+
   return (
     <Router>
       <div className="App">

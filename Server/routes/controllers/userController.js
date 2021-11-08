@@ -29,7 +29,6 @@ exports.newUser = asyncErrors(async (req, res, next) => {
   });
 
   sendToken(user, 200, res);
-
 });
 
 // @route   GET /users/all
@@ -350,4 +349,16 @@ exports.resetPassword = asyncErrors(async (req, res, next) => {
   await user.save();
 
   sendToken(user, 200, res);
+});
+
+// @route   GET /users/user
+// @desc    Get User Logged in User
+// @access  Private
+exports.getLoggedInUser = asyncErrors(async (req, res, next) => {
+  const users = await Users.findById(req.user.id);
+
+  res.status(200).json({
+    success: true,
+    users,
+  });
 });

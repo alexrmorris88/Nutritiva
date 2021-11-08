@@ -6,6 +6,9 @@ import {
   LOGIN_USER_REQUEST,
   LOGIN_USER_SUCCESS,
   LOGIN_USER_FAIL,
+  LOAD_USER_REQUEST,
+  LOAD_USER_SUCCESS,
+  LOAD_USER_FAIL,
   CLEAR_ERRORS,
 } from "../constants/userConstants";
 
@@ -63,6 +66,27 @@ export const login = (formData) => async (dispatch) => {
   }
 };
 
+// Load Users 
+export const loadUser = () => async (dispatch) => {
+  try {
+    dispatch({
+      type: LOAD_USER_REQUEST
+    })
+
+    const { data } = await axios.get('/users/user')
+
+    dispatch({
+      type: LOAD_USER_SUCCESS,
+      payload: data.users
+    })
+
+  } catch (error) {
+    dispatch({
+      type: LOAD_USER_FAIL,
+      error: error.response.data.message
+    })
+  }
+}
 
 // Clear Errors
 export const clearErrors = () => async (dispatch) => {

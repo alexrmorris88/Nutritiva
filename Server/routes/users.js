@@ -14,7 +14,9 @@ const {
   updatePassword,
   forgotPassword,
   resetPassword,
+  getLoggedInUser,
 } = require("./controllers/userController");
+
 
 // New User
 router.route("/register").post(newUser);
@@ -44,13 +46,16 @@ router.route("/login").post(login);
 router.route("/logout").get(logout);
 
 // Private - Update Password
-router.route("/update-password").put(isAuthenticatedUser,updatePassword);
+router.route("/update-password").put(isAuthenticatedUser, updatePassword);
 
 // Forgot Password
 router.route("/forgot-password").post(forgotPassword);
 
 // Reset Password
 router.route("/reset-password/:token").put(resetPassword);
+
+// Private - Get Logged in User
+router.route("/user").get(isAuthenticatedUser, getLoggedInUser);
 
 // Export Router
 module.exports = router;
