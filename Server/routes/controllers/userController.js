@@ -355,10 +355,13 @@ exports.resetPassword = asyncErrors(async (req, res, next) => {
 // @desc    Get User Logged in User
 // @access  Private
 exports.getLoggedInUser = asyncErrors(async (req, res, next) => {
-  const users = await Users.findById(req.user.id);
+  const user = await Users.findById(req.user.id);
+
+  const { avatar } = req.user;
 
   res.status(200).json({
     success: true,
-    users,
+    user,
+    avatar
   });
 });

@@ -9,6 +9,8 @@ import {
   LOAD_USER_REQUEST,
   LOAD_USER_SUCCESS,
   LOAD_USER_FAIL,
+  LOGOUT_USER_SUCCESS,
+  LOGOUT_USER_FAIL,
   CLEAR_ERRORS,
 } from "../constants/userConstants";
 
@@ -19,9 +21,9 @@ export const registerUser = (userData) => async (dispatch) => {
 
     const config = {
       headers: {
-          'Content-Type': 'application/json'
-      }
-  }
+        "Content-Type": "application/json",
+      },
+    };
 
     const { data } = await axios.post("/users/register", userData, config);
 
@@ -48,11 +50,7 @@ export const login = (formData) => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.post(
-      "/users/login",
-      formData,
-      config
-    );
+    const { data } = await axios.post("/users/login", formData, config);
 
     dispatch({
       type: LOGIN_USER_SUCCESS,
@@ -66,27 +64,43 @@ export const login = (formData) => async (dispatch) => {
   }
 };
 
-// Load Users 
+// Load Users currently logged in
 export const loadUser = () => async (dispatch) => {
   try {
     dispatch({
-      type: LOAD_USER_REQUEST
-    })
+      type: LOAD_USER_REQUEST,
+    });
 
-    const { data } = await axios.get('/users/user')
+    const { data } = await axios.get("/users/user");
 
     dispatch({
       type: LOAD_USER_SUCCESS,
-      payload: data.users
-    })
-
+      payload: data.user,
+    });
   } catch (error) {
     dispatch({
       type: LOAD_USER_FAIL,
-      error: error.response.data.message
-    })
+      error: error.response.data.message,
+    });
   }
-}
+};
+
+// Logout User
+export const logoutUser = () => async (dispatch) => {
+  try {
+    const { data } = await axios.get("/users/logout");
+
+    dispatch({
+      type: LOGOUT_USER_SUCCESS,
+      payload: data.message,
+    });
+  } catch (error) {
+    dispatch({
+      type: LOGOUT_USER_FAIL,
+      error: error.response.data.message,
+    });
+  }
+};
 
 // Clear Errors
 export const clearErrors = () => async (dispatch) => {
