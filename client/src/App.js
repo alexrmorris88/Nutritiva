@@ -1,5 +1,6 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import ProtectedRoute from "./components/utils/ProtectedRoute";
 
 // Layout Components
 import Footer from "./components/layout/Footer";
@@ -9,21 +10,21 @@ import Home from "./components/Home";
 // User Components
 import Register from "./components/user/Register";
 import Login from "./components/user/Login";
-import ForgotPassword from "./components/user/ForgotPassword"
+import ForgotPassword from "./components/user/ForgotPassword";
 import NewPassword from "./components/user/NewPassword";
 
 // Product Components
 import ProductDetails from "./components/products/productDetails";
 
 // Load user
-import { loadUser } from './state/actions/userActions'
-import store from './state/Store'
+import { loadUser } from "./state/actions/userActions";
+import store from "./state/Store";
+import Profile from "./components/user/Profile";
 
 function App() {
-
   useEffect(() => {
-    store.dispatch(loadUser())
-  }, [])
+    store.dispatch(loadUser());
+  }, []);
 
   return (
     <Router>
@@ -32,13 +33,26 @@ function App() {
         <div className="container container-fluid">
           <Routes>
             <Route path="/" element={<Home />} exact />
-            <Route path="/register" element={<Register />} 
-            exact />
-            <Route path="/login" element={<Login />} 
-            exact />
+            <Route path="/register" element={<Register />} exact />
+            <Route path="/login" element={<Login />} exact />
             <Route path="/products/:id" element={<ProductDetails />} exact />
             <Route path="/forgot-password" element={<ForgotPassword />} exact />
-            <Route path="/users/reset-password/:token" element={<NewPassword />} exact />
+            <Route
+              path="/users/reset-password/:token"
+              element={<NewPassword />}
+              exact
+            />
+
+            
+            <Route path="/profile" element={<ProtectedRoute isAdmin={false} />} exact >
+            <Route
+              path="/profile"
+              element={<Profile />}
+              exact
+            />
+            </Route>
+
+
           </Routes>
         </div>
         <Footer />
