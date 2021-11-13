@@ -100,7 +100,8 @@ const Login = () => {
                   />
                 </div>
 
-                <Link to="/user/password/forgot" className="float-right mb-4">
+                <Link to="/forgot-password" 
+                className="float-right mb-4">
                   Forgot Password?
                 </Link>
 
@@ -112,7 +113,7 @@ const Login = () => {
                   LOGIN
                 </button>
 
-                <Link to="/user/register" className="float-right mt-3">
+                <Link to="/register" className="float-right mt-3">
                   New User?
                 </Link>
               </form>

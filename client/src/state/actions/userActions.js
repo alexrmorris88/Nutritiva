@@ -11,6 +11,9 @@ import {
   LOAD_USER_FAIL,
   LOGOUT_USER_SUCCESS,
   LOGOUT_USER_FAIL,
+  FORGOT_PASSWORD_REQUEST,
+  FORGOT_PASSWORD_SUCCESS,
+  FORGOT_PASSWORD_FAIL,
   CLEAR_ERRORS,
 } from "../constants/userConstants";
 
@@ -98,6 +101,27 @@ export const logoutUser = () => async (dispatch) => {
     dispatch({
       type: LOGOUT_USER_FAIL,
       error: error.response.data.message,
+    });
+  }
+};
+
+// Forgot Password
+export const forgotPassword = (email) => async (dispatch) => {
+  try {
+    dispatch({
+      type: FORGOT_PASSWORD_REQUEST,
+    });
+
+    const { data } = await axios.post("/users/forgot-password", email);
+
+    dispatch({
+      type: FORGOT_PASSWORD_SUCCESS,
+      payload: data.message,
+    });
+  } catch (error) {
+    dispatch({
+      type: FORGOT_PASSWORD_FAIL,
+      payload: error.response.data.message,
     });
   }
 };

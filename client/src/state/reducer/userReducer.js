@@ -10,6 +10,9 @@ import {
   LOAD_USER_FAIL,
   LOGOUT_USER_SUCCESS,
   LOGOUT_USER_FAIL,
+  FORGOT_PASSWORD_REQUEST,
+  FORGOT_PASSWORD_SUCCESS,
+  FORGOT_PASSWORD_FAIL,
   CLEAR_ERRORS,
 } from "../constants/userConstants";
 
@@ -23,8 +26,8 @@ export const userReducer = (state = { user: {} }, action) => {
         isAuthenticated: false,
       };
 
-      case LOGIN_USER_SUCCESS:
-      case REGISTER_USER_SUCCESS:
+    case LOGIN_USER_SUCCESS:
+    case REGISTER_USER_SUCCESS:
       return {
         ...state,
         loading: false,
@@ -32,23 +35,23 @@ export const userReducer = (state = { user: {} }, action) => {
         user: action.payload,
       };
 
-      case LOAD_USER_SUCCESS:
-        return {
-          ...state,
-          loading: false,
-          isAuthenticated: true,
-          user: action.payload,
-        };
+    case LOAD_USER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        isAuthenticated: true,
+        user: action.payload,
+      };
 
-      case LOGOUT_USER_SUCCESS:
-        return {
-          loading: false,
-          isAuthenticated: false,
-          user: null
-        }
+    case LOGOUT_USER_SUCCESS:
+      return {
+        loading: false,
+        isAuthenticated: false,
+        user: null,
+      };
 
-      case LOGIN_USER_FAIL:
-      case REGISTER_USER_FAIL:
+    case LOGIN_USER_FAIL:
+    case REGISTER_USER_FAIL:
       return {
         ...state,
         loading: false,
@@ -57,19 +60,19 @@ export const userReducer = (state = { user: {} }, action) => {
         error: action.payload,
       };
 
-      case LOGOUT_USER_FAIL:
-        return {
-          ...state,
-          error: action.payload
-        }
+    case LOGOUT_USER_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
 
-      case LOAD_USER_FAIL:
-        return {
-          loading: false,
-          isAuthenticated: false,
-          user: null,
-          error: action.payload
-        }
+    case LOAD_USER_FAIL:
+      return {
+        loading: false,
+        isAuthenticated: false,
+        user: null,
+        error: action.payload,
+      };
 
     case CLEAR_ERRORS:
       return {
@@ -77,6 +80,30 @@ export const userReducer = (state = { user: {} }, action) => {
         error: null,
       };
 
+    default:
+      return state;
+  }
+};
+
+export const forgotPasswordReducer = (state = {}, action) => {
+  switch (action.type) {
+    case FORGOT_PASSWORD_REQUEST:
+      return {
+        ...state,
+        error: null,
+      };
+
+    case FORGOT_PASSWORD_SUCCESS:
+      return {
+        ...state,
+        message: action.payload,
+      };
+
+    case FORGOT_PASSWORD_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
     default:
       return state;
   }
