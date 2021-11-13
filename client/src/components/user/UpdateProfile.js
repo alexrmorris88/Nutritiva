@@ -1,9 +1,12 @@
+// React Imports
 import React, { Fragment, useState, useEffect } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useMatch } from "react-router";
+import { useAlert } from "react-alert";
 
+// Utils Imports
 import MetaData from "../utils/MetaData";
 
-import { useAlert } from "react-alert";
+// Redux Imports
 import { useDispatch, useSelector } from "react-redux";
 import {
   updateProfile,
@@ -13,7 +16,8 @@ import {
 import { UPDATE_PROFILE_RESET } from "../../state/constants/userConstants";
 
 const UpdateProfile = () => {
-  const [name, setName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [avatar, setAvatar] = useState("");
   const [avatarPreview, setAvatarPreview] = useState(
@@ -29,7 +33,8 @@ const UpdateProfile = () => {
 
   useEffect(() => {
     if (user) {
-      setName(user.name);
+      setFirstName(user.firstName);
+      setLastName(user.lastName);
       setEmail(user.email);
       setAvatarPreview(user.avatar);
     }
@@ -43,23 +48,25 @@ const UpdateProfile = () => {
       alert.success("User updated successfully");
       dispatch(loadUser());
 
-      navigate("/me");
-
+      navigate("/profile");
+      
       dispatch({
         type: UPDATE_PROFILE_RESET,
       });
+      
     }
   }, [dispatch, alert, error, navigate, isUpdated, user]);
 
   const submitHandler = (e) => {
     e.preventDefault();
 
-    const formData = new FormData();
-    formData.set("name", name);
-    formData.set("email", email);
-    formData.set("avatar", avatar);
+    const formData = {
+    "firstName": firstName,
+    "lastName": lastName,
+    "email": email,
+    "avatar": avatar,}
 
-    dispatch(updateProfile(formData));
+    dispatch(updateProfile(user._id, formData));
   };
 
   const onChange = (e) => {
@@ -88,14 +95,26 @@ const UpdateProfile = () => {
             <h1 className="mt-2 mb-5">Update Profile</h1>
 
             <div className="form-group">
-              <label htmlFor="email_field">Name</label>
+              <label htmlFor="email_field">First Name</label>
               <input
                 type="name"
                 id="name_field"
                 className="form-control"
-                name="name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                name="firstName"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="email_field">Last Name</label>
+              <input
+                type="name"
+                id="name_field"
+                className="form-control"
+                name="lastName"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
               />
             </div>
 

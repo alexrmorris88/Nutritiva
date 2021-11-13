@@ -164,7 +164,7 @@ export const updateProfile = (id, userData) => async (dispatch) => {
     });
 
     const { data } = await axios.put(
-      `/update/${id}`,
+      `/users/update/${id}`,
       userData
     );
 
