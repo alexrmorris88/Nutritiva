@@ -10,6 +10,7 @@ import Home from "./components/Home";
 import Register from "./components/user/Register";
 import Login from "./components/user/Login";
 import ForgotPassword from "./components/user/ForgotPassword"
+import NewPassword from "./components/user/NewPassword";
 
 // Product Components
 import ProductDetails from "./components/products/productDetails";
@@ -37,6 +38,7 @@ function App() {
             exact />
             <Route path="/products/:id" element={<ProductDetails />} exact />
             <Route path="/forgot-password" element={<ForgotPassword />} exact />
+            <Route path="/users/reset-password/:token" element={<NewPassword />} exact />
           </Routes>
         </div>
         <Footer />
