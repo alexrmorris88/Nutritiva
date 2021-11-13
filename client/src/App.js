@@ -12,6 +12,7 @@ import Register from "./components/user/Register";
 import Login from "./components/user/Login";
 import ForgotPassword from "./components/user/ForgotPassword";
 import NewPassword from "./components/user/NewPassword";
+import UpdateProfile from "./components/user/UpdateProfile";
 
 // Product Components
 import ProductDetails from "./components/products/productDetails";
@@ -48,6 +49,14 @@ function App() {
             <Route
               path="/profile"
               element={<Profile />}
+              exact
+            />
+            </Route>
+
+            <Route path="/update-profile" element={<ProtectedRoute isAdmin={false} />} exact >
+            <Route
+              path="/update-profile"
+              element={<UpdateProfile />}
               exact
             />
             </Route>
