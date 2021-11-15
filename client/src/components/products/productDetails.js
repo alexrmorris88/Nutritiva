@@ -1,6 +1,5 @@
 // React Imports
 import React, { Fragment, useEffect } from "react";
-import { useAlert } from "react-alert";
 import { useParams } from "react-router";
 
 // Utils Import
@@ -13,7 +12,6 @@ import { useDispatch, useSelector } from "react-redux";
 // Component Imports
 import {
   getProductDetails,
-  clearErrors,
 } from "../../state/actions/productActions";
 
 const ProductDetails = () => {
@@ -22,7 +20,7 @@ const ProductDetails = () => {
 
   const dispatch = useDispatch();
 
-  const { loading, error, product } = useSelector(
+  const { loading, product } = useSelector(
     (state) => state.productDetails
   );
 

@@ -7,6 +7,9 @@ import Footer from "./components/layout/Footer";
 import Header from "./components/layout/Header";
 import Home from "./components/Home";
 
+// Admin Components
+
+
 // User Components
 import Register from "./components/user/Register";
 import Login from "./components/user/Login";
@@ -45,29 +48,32 @@ function App() {
               exact
             />
 
-            
-            <Route path="/profile" element={<ProtectedRoute isAdmin={false} />} exact >
             <Route
               path="/profile"
-              element={<Profile />}
+              element={<ProtectedRoute isAdmin={false} />}
               exact
-            />
+            >
+              <Route path="/profile" element={<Profile />} exact />
             </Route>
 
-            <Route path="/update-profile" element={<ProtectedRoute isAdmin={false} />} exact >
             <Route
               path="/update-profile"
-              element={<UpdateProfile />}
+              element={<ProtectedRoute isAdmin={false} />}
               exact
-            />
+            >
+              <Route path="/update-profile" element={<UpdateProfile />} exact />
             </Route>
 
-            <Route path="/update-password" element={<ProtectedRoute isAdmin={false} />} exact >
             <Route
               path="/update-password"
-              element={<UpdatePassword />}
+              element={<ProtectedRoute isAdmin={false} />}
               exact
-            />
+            >
+              <Route
+                path="/update-password"
+                element={<UpdatePassword />}
+                exact
+              />
             </Route>
 
           </Routes>
