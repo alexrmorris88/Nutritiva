@@ -46,14 +46,15 @@ const UpdateProfile = () => {
 
     if (isUpdated) {
       alert.success("User updated successfully");
+
       dispatch(loadUser());
 
+      //todo: fix the navigate issue
       navigate("/profile");
-      
+
       dispatch({
         type: UPDATE_PROFILE_RESET,
       });
-      
     }
   }, [dispatch, alert, error, navigate, isUpdated, user]);
 
@@ -61,10 +62,11 @@ const UpdateProfile = () => {
     e.preventDefault();
 
     const formData = {
-    "firstName": firstName,
-    "lastName": lastName,
-    "email": email,
-    "avatar": avatar,}
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      avatar: avatar,
+    };
 
     dispatch(updateProfile(user._id, formData));
   };
