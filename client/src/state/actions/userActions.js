@@ -20,6 +20,9 @@ import {
   UPDATE_PROFILE_REQUEST,
   UPDATE_PROFILE_SUCCESS,
   UPDATE_PROFILE_FAIL,
+  UPDATE_PASSWORD_REQUEST,
+  UPDATE_PASSWORD_SUCCESS,
+  UPDATE_PASSWORD_FAIL,
   CLEAR_ERRORS,
 } from "../constants/userConstants";
 
@@ -179,6 +182,34 @@ export const updateProfile = (id, userData) => async (dispatch) => {
     });
   }
 
+}
+
+// Update Password
+export const updatePassword = (newPassword) => async (dispatch) => {
+  try {
+    dispatch({
+      type: UPDATE_PASSWORD_REQUEST
+    })
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+
+    const { data } = await axios.put("/users/update-password", newPassword, config)
+
+    dispatch({
+      type: UPDATE_PASSWORD_SUCCESS,
+      payload: data.success
+    })
+
+  } catch (error) {
+    dispatch({
+      type: UPDATE_PASSWORD_FAIL,
+      payload: error.request.data
+    })
+  }
 }
 
 // Clear Errors

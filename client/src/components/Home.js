@@ -55,7 +55,7 @@ const Home = () => {
             <Pagination
               activePage={currentPage}
               itemsCountPerPage={resPerPage}
-              totalItemsCount={productsCount}
+              totalItemsCount={(productsCount ? productsCount : 1)}
               onChange={setCurrentPageNumber}
               nextPageText={"Next"}
               prevPageText={"Prev"}

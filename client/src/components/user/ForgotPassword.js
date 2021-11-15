@@ -1,5 +1,6 @@
 // React Import
 import React, { Fragment, useState, useEffect } from "react";
+import { useNavigate } from "react-router";
 import { useAlert } from "react-alert";
 
 // Redux Import
@@ -13,6 +14,7 @@ const ForgotPassword = () => {
   const [Email, setEmail] = useState("");
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const alert = useAlert();
 
   const { message, error } = useSelector((state) => state.forgotPassword);
@@ -26,8 +28,9 @@ const ForgotPassword = () => {
 
     if (message) {
       alert.success(message);
+      navigate("/login")
     }
-  }, [dispatch, alert, error, message]);
+  }, [dispatch, alert, error, navigate, message]);
 
   // Submit Handler Function
   const submitHandler = (e) => {
