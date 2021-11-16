@@ -9,7 +9,6 @@ import Home from "./components/Home";
 
 // Admin Components
 
-
 // User Components
 import Register from "./components/user/Register";
 import Login from "./components/user/Login";
@@ -20,6 +19,10 @@ import UpdatePassword from "./components/user/UpdatePassword";
 
 // Product Components
 import ProductDetails from "./components/products/productDetails";
+
+// Order Components
+import OrderDetails from "./components/orders/OrderDetails";
+import ListOrders from "./components/orders/ListOrders";
 
 // Load user
 import { loadUser } from "./state/actions/userActions";
@@ -76,6 +79,21 @@ function App() {
               />
             </Route>
 
+            <Route
+              path="/orders"
+              element={<ProtectedRoute isAdmin={false} />}
+              exact
+            >
+              <Route path="/orders" element={<ListOrders />} exact />
+            </Route>
+
+            <Route
+              path="/orders/:id"
+              element={<ProtectedRoute isAdmin={false} />}
+              exact
+            >
+              <Route path="/orders/:id" element={<OrderDetails />} exact />
+            </Route>
           </Routes>
         </div>
         <Footer />

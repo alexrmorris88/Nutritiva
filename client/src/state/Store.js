@@ -4,14 +4,20 @@ import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 
 // User Reducers
-import { userReducer, forgotPasswordReducer,
-  editUserReducer } from "./reducer/userReducer";
+import {
+  userReducer,
+  forgotPasswordReducer,
+  editUserReducer,
+} from "./reducer/userReducer";
 
 // Products Reducers
 import {
   productReducer,
   productDetailsReducer,
 } from "./reducer/productReducer";
+
+// Orders Reducers
+import { orderDetailsReducer, myOrdersReducer } from "./reducer/ordersReducer";
 
 const reducers = combineReducers({
   // User Reducers
@@ -21,6 +27,9 @@ const reducers = combineReducers({
   // Products Reducers
   products: productReducer,
   productDetails: productDetailsReducer,
+  // Orders Reducers
+  orderDetails: orderDetailsReducer,
+  myOrders: myOrdersReducer,
 });
 
 let initialState = {};

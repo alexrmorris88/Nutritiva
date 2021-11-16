@@ -79,13 +79,11 @@ exports.getUserOrders = asyncErrors(async (req, res, next) => {
     );
   }
 
-  res
-    .status(200)
-    .json({
-      totalOrders: orders.length,
-      success: true,
-      orders,
-    })
+  res.status(200).json({
+    totalOrders: orders.length,
+    success: true,
+    orders,
+  });
 });
 
 // @route   DELETE /delete/:id
@@ -94,12 +92,10 @@ exports.getUserOrders = asyncErrors(async (req, res, next) => {
 exports.deleteOrder = asyncErrors(async (req, res, next) => {
   const order = await Orders.findById(req.params.id);
 
-  order.remove()
+  order.remove();
 
   res.status(200).json({
     success: true,
-    message: "Order has been deleted"
+    message: "Order has been deleted",
   });
-
-})
-
+});
