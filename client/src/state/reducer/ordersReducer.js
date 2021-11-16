@@ -54,6 +54,7 @@ export const myOrdersReducer = (state = { orders: [] }, action) => {
       return {
         loading: false,
         error: action.payload,
+        orders: null,
       };
     case CLEAR_ERRORS:
       return {

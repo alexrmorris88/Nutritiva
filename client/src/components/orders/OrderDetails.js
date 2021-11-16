@@ -38,7 +38,7 @@ const OrderDetails = () => {
       alert.error(error);
       dispatch(clearErrors());
     }
-  }, [dispatch, alert, error]);
+  }, [dispatch, alert, error, id]);
 
   const shippingDetails =
     shippingInfo &&

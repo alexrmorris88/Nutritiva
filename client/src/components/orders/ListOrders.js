@@ -21,7 +21,9 @@ const ListOrders = () => {
   const { loading, error, orders } = useSelector((state) => state.myOrders);
 
   useEffect(() => {
-    dispatch(myOrders());
+    if (orders !== null) {
+      dispatch(myOrders());
+    }
 
     if (error) {
       alert.error(error);
@@ -81,7 +83,6 @@ const ListOrders = () => {
         ),
       });
     });
-
     return data;
   };
 
@@ -93,6 +94,10 @@ const ListOrders = () => {
 
       {loading ? (
         <Loader />
+      ) : orders === null ? (
+        <h1>
+          <center>You have no orders</center>
+        </h1>
       ) : (
         <MDBDataTable
           data={setOrders()}
