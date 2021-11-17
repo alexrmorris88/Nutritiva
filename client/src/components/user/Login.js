@@ -2,7 +2,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAlert } from "react-alert";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 // Redux Import
 import { useDispatch, useSelector } from "react-redux";
@@ -31,9 +31,8 @@ const Login = () => {
   useEffect(() => {
     if (isAuthenticated) {
       // if auth, auto navigate to "/"
-      navigate("/");
+      navigate(-1);
     }
-
     if (error) {
       // Clear errors, if any
       alert.error(error);
@@ -100,8 +99,7 @@ const Login = () => {
                   />
                 </div>
 
-                <Link to="/forgot-password" 
-                className="float-right mb-4">
+                <Link to="/forgot-password" className="float-right mb-4">
                   Forgot Password?
                 </Link>
 

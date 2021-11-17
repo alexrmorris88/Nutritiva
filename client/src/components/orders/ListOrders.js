@@ -29,7 +29,7 @@ const ListOrders = () => {
       alert.error(error);
       dispatch(clearErrors());
     }
-  }, [dispatch, alert, error]);
+  }, [dispatch, alert, error, orders]);
 
   const setOrders = () => {
     const data = {
