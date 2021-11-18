@@ -5,6 +5,9 @@ import {
   GET_PRODUCT_REQUEST,
   GET_PRODUCT_SUCCESS,
   GET_PRODUCT_FAIL,
+  ADMIN_PRODUCT_REQUEST,
+  ADMIN_PRODUCT_SUCCESS,
+  ADMIN_PRODUCT_FAIL,
   CLEAR_ERRORS,
 } from "../constants/productConstants";
 
@@ -12,6 +15,7 @@ import {
 export const productReducer = (state = { products: [] }, action) => {
   switch (action.type) {
     case GET_PRODUCTS_REQUEST:
+    case ADMIN_PRODUCT_REQUEST:
       return {
         loading: true,
         products: [],
@@ -25,7 +29,14 @@ export const productReducer = (state = { products: [] }, action) => {
         productsCount: action.payload.productsCount,
       };
 
+    case ADMIN_PRODUCT_SUCCESS:
+      return {
+        loading: false,
+        products: action.payload,
+      };
+
     case GET_PRODUCTS_FAIL:
+    case ADMIN_PRODUCT_FAIL:
       return {
         loading: false,
         products: null,
@@ -46,32 +57,31 @@ export const productReducer = (state = { products: [] }, action) => {
 // Product Details Reducer
 export const productDetailsReducer = (state = { product: {} }, action) => {
   switch (action.type) {
+    case GET_PRODUCT_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
 
-      case GET_PRODUCT_REQUEST:
-          return {
-              ...state,
-              loading: true
-          }
+    case GET_PRODUCT_SUCCESS:
+      return {
+        loading: false,
+        product: action.payload,
+      };
 
-      case GET_PRODUCT_SUCCESS:
-          return {
-              loading: false,
-              product: action.payload
-          }
+    case GET_PRODUCT_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
 
-      case GET_PRODUCT_FAIL:
-          return {
-              ...state,
-              error: action.payload
-          }
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
 
-      case CLEAR_ERRORS:
-          return {
-              ...state,
-              error: null
-          }
-
-      default:
-          return state
+    default:
+      return state;
   }
-}
+};

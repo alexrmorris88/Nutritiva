@@ -8,6 +8,7 @@ import Header from "./components/layout/Header";
 import Home from "./components/Home";
 
 // Admin Components
+import Dashboard from "./components/admin/Dashboard";
 
 // User Components
 import Register from "./components/user/Register";
@@ -95,6 +96,14 @@ function App() {
               exact
             >
               <Route path="/orders/:id" element={<OrderDetails />} exact />
+            </Route>
+
+            <Route
+              path="/dashboard"
+              element={<ProtectedRoute isAdmin={false} />}
+              exact
+            >
+              <Route path="/dashboard" element={<Dashboard />} exact />
             </Route>
           </Routes>
         </div>

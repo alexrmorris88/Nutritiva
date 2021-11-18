@@ -23,6 +23,9 @@ import {
   UPDATE_PASSWORD_REQUEST,
   UPDATE_PASSWORD_SUCCESS,
   UPDATE_PASSWORD_FAIL,
+  ALL_USERS_REQUEST,
+  ALL_USERS_SUCCESS,
+  ALL_USERS_FAIL,
   CLEAR_ERRORS,
 } from "../constants/userConstants";
 
@@ -166,10 +169,7 @@ export const updateProfile = (id, userData) => async (dispatch) => {
       type: UPDATE_PROFILE_REQUEST,
     });
 
-    const { data } = await axios.put(
-      `/users/update/${id}`,
-      userData
-    );
+    const { data } = await axios.put(`/users/update/${id}`, userData);
 
     dispatch({
       type: UPDATE_PROFILE_SUCCESS,
@@ -181,36 +181,57 @@ export const updateProfile = (id, userData) => async (dispatch) => {
       payload: error.response.data.message,
     });
   }
-
-}
+};
 
 // Update Password
 export const updatePassword = (newPassword) => async (dispatch) => {
   try {
     dispatch({
-      type: UPDATE_PASSWORD_REQUEST
-    })
+      type: UPDATE_PASSWORD_REQUEST,
+    });
 
     const config = {
       headers: {
-        'Content-Type': 'application/json'
-      }
-    }
+        "Content-Type": "application/json",
+      },
+    };
 
-    const { data } = await axios.put("/users/update-password", newPassword, config)
+    const { data } = await axios.put(
+      "/users/update-password",
+      newPassword,
+      config
+    );
 
     dispatch({
       type: UPDATE_PASSWORD_SUCCESS,
-      payload: data.success
-    })
-
+      payload: data.success,
+    });
   } catch (error) {
     dispatch({
       type: UPDATE_PASSWORD_FAIL,
-      payload: error.request.data
-    })
+      payload: error.request.data,
+    });
   }
-}
+};
+
+// Get All Users
+export const allUsers = () => async (dispatch) => {
+  try {
+    dispatch({ type: ALL_USERS_REQUEST });
+
+    const { data } = await axios.get("/user/admin/users");
+
+    dispatch({
+      type: ALL_USERS_SUCCESS,
+      payload: data.users,
+    });
+  } catch (error) {
+    dispatch({
+      type: ALL_USERS_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
 
 // Clear Errors
 export const clearErrors = () => async (dispatch) => {

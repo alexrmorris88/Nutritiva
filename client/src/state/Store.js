@@ -8,6 +8,7 @@ import {
   userReducer,
   forgotPasswordReducer,
   editUserReducer,
+  allUsersReducer,
 } from "./reducer/userReducer";
 
 // Products Reducers
@@ -17,19 +18,25 @@ import {
 } from "./reducer/productReducer";
 
 // Orders Reducers
-import { orderDetailsReducer, myOrdersReducer } from "./reducer/ordersReducer";
+import {
+  orderDetailsReducer,
+  myOrdersReducer,
+  allOrdersReducer,
+} from "./reducer/ordersReducer";
 
 const reducers = combineReducers({
   // User Reducers
   user: userReducer,
   forgotPassword: forgotPasswordReducer,
   editUser: editUserReducer,
+  allUsers: allUsersReducer,
   // Products Reducers
   products: productReducer,
   productDetails: productDetailsReducer,
   // Orders Reducers
   orderDetails: orderDetailsReducer,
   myOrders: myOrdersReducer,
+  allOrders: allOrdersReducer,
 });
 
 let initialState = {};

@@ -22,7 +22,6 @@ exports.newProduct = asyncErrors(async (req, res, next) => {
 // @desc    Display All Products
 // @access  Public
 exports.allProducts = asyncErrors(async (req, res, next) => {
-
   const resPerPage = 8;
   const productsCount = await Product.countDocuments();
 
@@ -41,6 +40,13 @@ exports.allProducts = asyncErrors(async (req, res, next) => {
     resPerPage,
     product,
   });
+
+  if (!product) {
+    res.status(400).json({
+      success: false,
+      message: "There are no products available",
+    });
+  }
 });
 
 // @route   GET /products/:id
@@ -137,6 +143,13 @@ exports.getAdminProducts = asyncErrors(async (req, res, next) => {
     success: true,
     product,
   });
+
+  if (!product) {
+    res.status(400).json({
+      success: false,
+      message: "There are no products available",
+    });
+  }
 });
 
 // @route   POST /products/reviews/create
