@@ -17,8 +17,7 @@ const Header = () => {
   const logoutHandler = () => {
     dispatch(logoutUser());
     alert.success("Logged out successfully");
-  }
-
+  };
 
   return (
     <Fragment>

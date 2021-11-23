@@ -59,11 +59,11 @@ export const allOrders = () => async (dispatch) => {
       type: ALL_ORDERS_REQUEST,
     });
 
-    const { data } = await axios.get();
+    const { data } = await axios.get("/orders/all");
 
     dispatch({
       type: ALL_ORDERS_SUCCESS,
-      payload: data.orders,
+      payload: data,
     });
   } catch (error) {
     dispatch({

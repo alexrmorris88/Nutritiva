@@ -36,6 +36,15 @@ app.use("/products", products);
 app.use("/users", users);
 app.use("/orders", orders);
 
+// Handling "Undhandled Promise Rejections"
+process.on("unhandledRejection", (err) => {
+  console.log(`ERROR: ${err.message}`);
+  console.log("Shutting down the server due to Undhandled Promise Rejections");
+  server.close(() => {
+    process.exit(1);
+  });
+});
+
 // Run backend Server
 dotenv.config({ path: "Server/config/config.env" });
 

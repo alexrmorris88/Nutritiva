@@ -23,12 +23,12 @@ export const allProducts = (currentPage) => async (dispatch) => {
 
     dispatch({
       type: GET_PRODUCTS_SUCCESS,
-      payload: data.product,
+      payload: data,
     });
   } catch (error) {
     dispatch({
       type: GET_PRODUCTS_FAIL,
-      payload: error.response.data,
+      payload: error.response.data.message,
     });
   }
 };

@@ -32,7 +32,7 @@ export const productReducer = (state = { products: [] }, action) => {
     case ADMIN_PRODUCT_SUCCESS:
       return {
         loading: false,
-        products: action.payload,
+        products: action.payload.product,
       };
 
     case GET_PRODUCTS_FAIL:

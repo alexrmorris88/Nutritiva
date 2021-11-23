@@ -100,7 +100,7 @@ function App() {
 
             <Route
               path="/dashboard"
-              element={<ProtectedRoute isAdmin={false} />}
+              element={<ProtectedRoute isAdmin={true} />}
               exact
             >
               <Route path="/dashboard" element={<Dashboard />} exact />

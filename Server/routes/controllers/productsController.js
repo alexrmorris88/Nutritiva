@@ -22,26 +22,26 @@ exports.newProduct = asyncErrors(async (req, res, next) => {
 // @desc    Display All Products
 // @access  Public
 exports.allProducts = asyncErrors(async (req, res, next) => {
-  const resPerPage = 8;
-  const productsCount = await Product.countDocuments();
+  try {
+    const resPerPage = 8;
+    const productsCount = await Product.countDocuments();
 
-  const ApiFeatures = new APIFeatures(Product.find(), req.query)
-    .search()
-    .filter()
-    .pagination(resPerPage);
+    const ApiFeatures = new APIFeatures(Product.find(), req.query)
+      .search()
+      .filter()
+      .pagination(resPerPage);
 
-  let product = await ApiFeatures.query;
-  let filteredProductsCount = product.length;
+    let product = await ApiFeatures.query;
+    let filteredProductsCount = product.length;
 
-  res.status(201).json({
-    success: true,
-    productsCount,
-    filteredProductsCount,
-    resPerPage,
-    product,
-  });
-
-  if (!product) {
+    res.status(201).json({
+      success: true,
+      productsCount,
+      filteredProductsCount,
+      resPerPage,
+      product,
+    });
+  } catch (error) {
     res.status(400).json({
       success: false,
       message: "There are no products available",
