@@ -8,6 +8,10 @@ import {
   ADMIN_PRODUCT_REQUEST,
   ADMIN_PRODUCT_SUCCESS,
   ADMIN_PRODUCT_FAIL,
+  DELETE_PRODUCT_REQUEST,
+  DELETE_PRODUCT_SUCCESS,
+  DELETE_PRODUCT_FAIL,
+  DELETE_PRODUCT_RESET,
   CLEAR_ERRORS,
 } from "../constants/productConstants";
 
@@ -81,6 +85,43 @@ export const productDetailsReducer = (state = { product: {} }, action) => {
         error: null,
       };
 
+    default:
+      return state;
+  }
+};
+
+export const modifyProductReducer = (state = {}, action) => {
+  switch (action.type) {
+    case DELETE_PRODUCT_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case DELETE_PRODUCT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        isDeleted: action.payload,
+      };
+
+    case DELETE_PRODUCT_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case DELETE_PRODUCT_RESET:
+      return {
+        ...state,
+        isDeleted: false,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
     default:
       return state;
   }

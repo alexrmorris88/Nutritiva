@@ -9,6 +9,7 @@ import Home from "./components/Home";
 
 // Admin Components
 import Dashboard from "./components/admin/Dashboard";
+import ProductList from "./components/admin/ProductList";
 
 // User Components
 import Register from "./components/user/Register";
@@ -104,6 +105,18 @@ function App() {
               exact
             >
               <Route path="/dashboard" element={<Dashboard />} exact />
+            </Route>
+
+            <Route
+              path="/product/admin/products"
+              element={<ProtectedRoute isAdmin={true} />}
+              exact
+            >
+              <Route
+                path="/product/admin/products"
+                element={<ProductList />}
+                exact
+              />
             </Route>
           </Routes>
         </div>
