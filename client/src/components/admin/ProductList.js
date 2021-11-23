@@ -1,6 +1,7 @@
 // React
 import React, { Fragment, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 // MDB Data Table
 import { MDBDataTable } from "mdbreact";
@@ -20,9 +21,10 @@ import MetaData from "../utils/MetaData";
 import { useAlert } from "react-alert";
 import Sidebar from "./Sidebar";
 
-const ProductsList = ({ history }) => {
+const ProductsList = () => {
   const alert = useAlert();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { loading, error, products } = useSelector((state) => state.products);
   const { error: deleteError, isDeleted } = useSelector(
@@ -44,10 +46,10 @@ const ProductsList = ({ history }) => {
 
     if (isDeleted) {
       alert.success("Product deleted successfully");
-      history.push("/product/admin/products");
+      navigate("/product/admin/products");
       dispatch({ type: DELETE_PRODUCT_RESET });
     }
-  }, [dispatch, alert, error, deleteError, isDeleted, history]);
+  }, [dispatch, alert, error, deleteError, isDeleted, navigate]);
 
   const setProducts = () => {
     const data = {
