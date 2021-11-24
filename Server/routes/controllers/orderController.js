@@ -104,7 +104,7 @@ exports.deleteOrder = asyncErrors(async (req, res, next) => {
 // @desc    Update the Orders
 // @access  Private/Admin
 exports.findOrderByID = asyncErrors(async (req, res, next) => {
-  const order = await Order.findById(req.params.id);
+  const order = await Orders.findById(req.params.id);
 
   if (!order) {
     return next(
@@ -129,7 +129,6 @@ exports.findOrderByID = asyncErrors(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    totalAmount,
     order,
   });
 });

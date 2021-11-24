@@ -2,7 +2,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAlert } from "react-alert";
-import { useParams } from "react-router";
+import { useParams, useNavigate } from "react-router";
 
 // Redux Import
 import { useDispatch, useSelector } from "react-redux";
@@ -21,6 +21,7 @@ import Sidebar from "./Sidebar";
 
 const ProcessOrder = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const [status, setStatus] = useState("");
 
@@ -50,13 +51,15 @@ const ProcessOrder = () => {
 
     if (isUpdated) {
       alert.success("Order updated successfully");
+      navigate("/admin/orders");
       dispatch({ type: UPDATE_ORDERS_RESET });
     }
   }, [dispatch, alert, error, isUpdated, orderId]);
 
   const updateOrderHandler = (id) => {
-    const formData = new FormData();
-    formData.set("status", status);
+    const formData = {
+      status: status,
+    };
 
     dispatch(updateOrder(id, formData));
   };
