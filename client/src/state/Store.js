@@ -24,6 +24,7 @@ import {
   orderDetailsReducer,
   myOrdersReducer,
   allOrdersReducer,
+  orderReducer,
 } from "./reducer/ordersReducer";
 
 const reducers = combineReducers({
@@ -41,6 +42,7 @@ const reducers = combineReducers({
   orderDetails: orderDetailsReducer,
   myOrders: myOrdersReducer,
   allOrders: allOrdersReducer,
+  order: orderReducer,
 });
 
 let initialState = {};

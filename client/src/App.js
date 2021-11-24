@@ -12,6 +12,7 @@ import Dashboard from "./components/admin/Dashboard";
 import ProductList from "./components/admin/ProductList";
 import UpdateProduct from "./components/admin/UpdateProduct";
 import NewProduct from "./components/admin/NewProduct";
+import OrdersList from "./components/admin/OrdersList";
 
 // User Components
 import Register from "./components/user/Register";
@@ -139,6 +140,14 @@ function App() {
                 element={<NewProduct />}
                 exact
               />
+            </Route>
+
+            <Route
+              path="/admin/orders"
+              element={<ProtectedRoute isAdmin={true} />}
+              exact
+            >
+              <Route path="/admin/orders" element={<OrdersList />} exact />
             </Route>
           </Routes>
         </div>

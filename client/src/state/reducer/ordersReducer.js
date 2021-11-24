@@ -8,6 +8,10 @@ import {
   ALL_ORDERS_REQUEST,
   ALL_ORDERS_SUCCESS,
   ALL_ORDERS_FAIL,
+  DELETE_ORDERS_REQUEST,
+  DELETE_ORDERS_SUCCESS,
+  DELETE_ORDERS_FAIL,
+  DELETE_ORDERS_RESET,
   CLEAR_ERRORS,
 } from "../constants/orderConstants";
 
@@ -88,6 +92,44 @@ export const allOrdersReducer = (state = { order: [] }, action) => {
         loading: false,
         error: action.payload,
       };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const orderReducer = (state = {}, action) => {
+  switch (action.type) {
+    case DELETE_ORDERS_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case DELETE_ORDERS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        isDeleted: action.payload,
+      };
+
+    case DELETE_ORDERS_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    case DELETE_ORDERS_RESET:
+      return {
+        ...state,
+        isDeleted: false,
+      };
+
     case CLEAR_ERRORS:
       return {
         ...state,

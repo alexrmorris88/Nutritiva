@@ -9,6 +9,9 @@ import {
   ALL_ORDERS_REQUEST,
   ALL_ORDERS_SUCCESS,
   ALL_ORDERS_FAIL,
+  DELETE_ORDERS_REQUEST,
+  DELETE_ORDERS_SUCCESS,
+  DELETE_ORDERS_FAIL,
   CLEAR_ERRORS,
 } from "../constants/orderConstants";
 
@@ -69,6 +72,27 @@ export const allOrders = () => async (dispatch) => {
     dispatch({
       type: ALL_ORDERS_FAIL,
       payload: error.response.data.message,
+    });
+  }
+};
+
+// Delete Admin Order
+export const deleteOrder = (id) => async (dispatch) => {
+  try {
+    dispatch({
+      type: DELETE_ORDERS_REQUEST,
+    });
+
+    const { data } = await axios.delete(`/orders/delete/${id}`);
+
+    dispatch({
+      type: DELETE_ORDERS_SUCCESS,
+      payload: data.message,
+    });
+  } catch (error) {
+    dispatch({
+      type: DELETE_ORDERS_FAIL,
+      payload: error.response.data,
     });
   }
 };
