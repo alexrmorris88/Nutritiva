@@ -11,6 +11,7 @@ import Home from "./components/Home";
 import Dashboard from "./components/admin/Dashboard";
 import ProductList from "./components/admin/ProductList";
 import UpdateProduct from "./components/admin/UpdateProduct";
+import NewProduct from "./components/admin/NewProduct";
 
 // User Components
 import Register from "./components/user/Register";
@@ -124,6 +125,18 @@ function App() {
               <Route
                 path="/admin/products/:id"
                 element={<UpdateProduct />}
+                exact
+              />
+            </Route>
+
+            <Route
+              path="/admin/products/new"
+              element={<ProtectedRoute isAdmin={true} />}
+              exact
+            >
+              <Route
+                path="/admin/products/new"
+                element={<NewProduct />}
                 exact
               />
             </Route>

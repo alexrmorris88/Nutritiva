@@ -23,13 +23,13 @@ const Sidebar = () => {
             </a>
             <ul className="collapse list-unstyled" id="productSubmenu">
               <li>
-                <Link to="/product/admin/products">
+                <Link to="/admin/products">
                   <i className="fa fa-clipboard"></i> All
                 </Link>
               </li>
 
               <li>
-                <Link to="/product/admin/new">
+                <Link to="/admin/products/new">
                   <i className="fa fa-plus"></i> Create
                 </Link>
               </li>
