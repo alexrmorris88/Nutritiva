@@ -46,7 +46,7 @@ const ProductsList = () => {
 
     if (isDeleted) {
       alert.success("Product deleted successfully");
-      navigate("/product/admin/products");
+      navigate("/admin/products");
       dispatch({ type: DELETE_PRODUCT_RESET });
     }
   }, [dispatch, alert, error, deleteError, isDeleted, navigate]);
@@ -91,7 +91,7 @@ const ProductsList = () => {
         actions: (
           <Fragment>
             <Link
-              to={`/product/admin/prod/${product._id}`}
+              to={`/admin/products/${product._id}`}
               className="btn btn-primary py-1 px-2"
             >
               <i className="fa fa-pencil"></i>

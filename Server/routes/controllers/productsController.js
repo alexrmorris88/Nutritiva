@@ -129,7 +129,7 @@ exports.updateProductByID = asyncErrors(async (req, res, next) => {
 });
 
 // @route   GET /products/admin/all/
-// @desc    Update Product by ID
+// @desc    Get Admin Products
 // @access  Private/Admin
 exports.getAdminProducts = asyncErrors(async (req, res, next) => {
   const ApiFeatures = new APIFeatures(Product.find(), req.query)
