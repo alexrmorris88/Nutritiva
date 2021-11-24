@@ -26,6 +26,9 @@ import {
   ALL_USERS_REQUEST,
   ALL_USERS_SUCCESS,
   ALL_USERS_FAIL,
+  DELETE_USER_REQUEST,
+  DELETE_USER_SUCCESS,
+  DELETE_USER_FAIL,
   CLEAR_ERRORS,
 } from "../constants/userConstants";
 
@@ -219,7 +222,7 @@ export const allUsers = () => async (dispatch) => {
   try {
     dispatch({ type: ALL_USERS_REQUEST });
 
-    const { data } = await axios.get("/user/admin/users");
+    const { data } = await axios.get("/users/search");
 
     dispatch({
       type: ALL_USERS_SUCCESS,
@@ -228,6 +231,27 @@ export const allUsers = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: ALL_USERS_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+// Delete Users - Admin
+export const deleteUser = (id) => async (dispatch) => {
+  try {
+    dispatch({
+      type: DELETE_USER_REQUEST,
+    });
+
+    const { data } = await axios.delete(`/users/delete/${id}`);
+
+    dispatch({
+      type: DELETE_USER_SUCCESS,
+      payload: data.success,
+    });
+  } catch (error) {
+    dispatch({
+      type: DELETE_USER_FAIL,
       payload: error.response.data.message,
     });
   }

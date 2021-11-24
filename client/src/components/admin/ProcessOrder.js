@@ -54,7 +54,7 @@ const ProcessOrder = () => {
       navigate("/admin/orders");
       dispatch({ type: UPDATE_ORDERS_RESET });
     }
-  }, [dispatch, alert, error, isUpdated, orderId]);
+  }, [dispatch, alert, error, isUpdated, orderId, navigate]);
 
   const updateOrderHandler = (id) => {
     const formData = {

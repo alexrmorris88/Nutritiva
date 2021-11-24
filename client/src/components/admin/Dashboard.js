@@ -113,7 +113,7 @@ const Dashboard = () => {
                     </div>
                     <Link
                       className="card-footer text-white clearfix small z-1"
-                      to="/user/admin/users"
+                      to="/admin/users"
                     >
                       <span className="float-left">View Details</span>
                       <span className="float-right">
