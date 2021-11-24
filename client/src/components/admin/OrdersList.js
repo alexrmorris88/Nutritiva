@@ -94,7 +94,7 @@ const OrdersList = () => {
         actions: (
           <Fragment>
             <Link
-              to={`/order/admin/order/${order._id}`}
+              to={`/admin/order/${order._id}`}
               className="btn btn-primary py-1 px-2"
             >
               <i className="fa fa-eye"></i>

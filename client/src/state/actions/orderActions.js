@@ -12,6 +12,9 @@ import {
   DELETE_ORDERS_REQUEST,
   DELETE_ORDERS_SUCCESS,
   DELETE_ORDERS_FAIL,
+  UPDATE_ORDERS_REQUEST,
+  UPDATE_ORDERS_SUCCESS,
+  UPDATE_ORDERS_FAIL,
   CLEAR_ERRORS,
 } from "../constants/orderConstants";
 
@@ -92,6 +95,37 @@ export const deleteOrder = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: DELETE_ORDERS_FAIL,
+      payload: error.response.data,
+    });
+  }
+};
+
+//updateOrder
+export const updateOrder = (id, formData) => async (dispatch) => {
+  try {
+    dispatch({
+      type: UPDATE_ORDERS_REQUEST,
+    });
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    const { data } = await axios.put(
+      `/orders/admin/order/${id}`,
+      formData,
+      config
+    );
+
+    dispatch({
+      type: UPDATE_ORDERS_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: UPDATE_ORDERS_FAIL,
       payload: error.response.data,
     });
   }

@@ -8,6 +8,7 @@ const {
   allOrders,
   getUserOrders,
   deleteOrder,
+  findOrderByID,
 } = require("./controllers/orderController");
 
 // New Order
@@ -26,5 +27,10 @@ router.route("/user").get(isAuthenticatedUser, getUserOrders);
 
 // Delete Order
 router.route("/delete/:id").delete(isAuthenticatedUser, deleteOrder);
+
+// Update Order
+router
+  .route("/admin/order/:id")
+  .put(isAuthenticatedUser, authorizeRoles("admin"), findOrderByID);
 
 module.exports = router;
