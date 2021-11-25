@@ -29,6 +29,9 @@ import {
   DELETE_USER_REQUEST,
   DELETE_USER_SUCCESS,
   DELETE_USER_FAIL,
+  USER_DETAILS_REQUEST,
+  USER_DETAILS_SUCCESS,
+  USER_DETAILS_FAIL,
   CLEAR_ERRORS,
 } from "../constants/userConstants";
 
@@ -172,7 +175,13 @@ export const updateProfile = (id, userData) => async (dispatch) => {
       type: UPDATE_PROFILE_REQUEST,
     });
 
-    const { data } = await axios.put(`/users/update/${id}`, userData);
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    const { data } = await axios.put(`/users/update/${id}`, userData, config);
 
     dispatch({
       type: UPDATE_PROFILE_SUCCESS,
@@ -252,6 +261,27 @@ export const deleteUser = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: DELETE_USER_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+// Get User Details - admin
+export const getUserDetails = (id) => async (dispatch) => {
+  try {
+    dispatch({
+      type: USER_DETAILS_REQUEST,
+    });
+
+    const { data } = await axios.get(`/users/search/${id}`);
+
+    dispatch({
+      type: USER_DETAILS_SUCCESS,
+      payload: data.users,
+    });
+  } catch (error) {
+    dispatch({
+      type: USER_DETAILS_FAIL,
       payload: error.response.data.message,
     });
   }

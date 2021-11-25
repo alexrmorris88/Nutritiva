@@ -9,6 +9,7 @@ import {
   forgotPasswordReducer,
   editUserReducer,
   allUsersReducer,
+  userDetailsReducer,
 } from "./reducer/userReducer";
 
 // Products Reducers
@@ -33,6 +34,7 @@ const reducers = combineReducers({
   forgotPassword: forgotPasswordReducer,
   editUser: editUserReducer,
   allUsers: allUsersReducer,
+  userDetails: userDetailsReducer,
   // Products Reducers
   products: productReducer,
   productDetails: productDetailsReducer,
