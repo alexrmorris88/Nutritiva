@@ -201,12 +201,19 @@ exports.createProductReviews = asyncErrors(async (req, res, next) => {
 // @desc    Get Product Reviews by ID
 // @access  Private
 exports.getProductReviews = asyncErrors(async (req, res, next) => {
-  const product = await Product.findById(req.params.id);
+  try {
+    const product = await Product.findById(req.params.id);
 
-  res.status(200).json({
-    success: true,
-    reviews: product.reviews,
-  });
+    res.status(200).json({
+      success: true,
+      reviews: product.reviews,
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: "Server Error",
+    });
+  }
 });
 
 // @route   DELETE /products/reviews

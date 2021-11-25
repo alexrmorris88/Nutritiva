@@ -16,6 +16,7 @@ import OrdersList from "./components/admin/OrdersList";
 import ProcessOrder from "./components/admin/ProcessOrder";
 import UsersList from "./components/admin/UsersList";
 import UpdateUser from "./components/admin/UpdateUser";
+import ProductReviews from "./components/admin/ProductReviews";
 
 // User Components
 import Register from "./components/user/Register";
@@ -175,6 +176,18 @@ function App() {
               exact
             >
               <Route path="/admin/user/:id" element={<UpdateUser />} exact />
+            </Route>
+
+            <Route
+              path="/product/reviews"
+              element={<ProtectedRoute isAdmin={true} />}
+              exact
+            >
+              <Route
+                path="/product/reviews"
+                element={<ProductReviews />}
+                exact
+              />
             </Route>
           </Routes>
         </div>

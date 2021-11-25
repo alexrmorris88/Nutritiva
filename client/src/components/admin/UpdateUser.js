@@ -59,7 +59,7 @@ const UpdateUser = () => {
 
       navigate("/admin/users");
     }
-  }, [dispatch, alert, error, navigate, isUpdated, user]);
+  }, [dispatch, alert, error, navigate, isUpdated, user, userId]);
 
   // Submit Handler Function
   const submitHandler = (e) => {
