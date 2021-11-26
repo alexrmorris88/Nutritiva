@@ -211,7 +211,7 @@ exports.getProductReviews = asyncErrors(async (req, res, next) => {
   } catch (error) {
     res.status(400).json({
       success: false,
-      message: "Server Error",
+      message: "Product ID is Incorrect",
     });
   }
 });

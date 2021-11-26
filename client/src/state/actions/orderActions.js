@@ -121,7 +121,7 @@ export const updateOrder = (id, formData) => async (dispatch) => {
 
     dispatch({
       type: UPDATE_ORDERS_SUCCESS,
-      payload: data,
+      payload: data.order,
     });
   } catch (error) {
     dispatch({

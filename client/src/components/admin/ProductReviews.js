@@ -30,11 +30,6 @@ const ProductReviews = () => {
   const { isDeleted } = useSelector((state) => state.review);
 
   useEffect(() => {
-    if (error) {
-      alert.error(error);
-      dispatch(clearErrors());
-    }
-
     if (productId !== "") {
       dispatch(getProductReviews(productId));
     }
@@ -44,7 +39,7 @@ const ProductReviews = () => {
       navigate("/product/reviews");
       dispatch({ type: DELETE_REVIEW_RESET });
     }
-  }, [dispatch, alert, error, productId, isDeleted, navigate]);
+  }, [dispatch, alert, productId, isDeleted, navigate]);
 
   const deleteReviewHandler = (id) => {
     dispatch(deleteProductReviews(id, productId));
@@ -53,6 +48,11 @@ const ProductReviews = () => {
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(getProductReviews(productId));
+
+    if (error) {
+      alert.error(error);
+      dispatch(clearErrors());
+    }
   };
 
   const setReviews = () => {
