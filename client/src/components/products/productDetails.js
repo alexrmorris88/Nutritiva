@@ -1,6 +1,7 @@
 // React Imports
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useParams } from "react-router";
+import { useAlert } from "react-alert";
 
 // Utils Import
 import MetaData from "../utils/MetaData";
@@ -10,23 +11,26 @@ import Loader from "../utils/Loader";
 import { useDispatch, useSelector } from "react-redux";
 
 // Component Imports
-import {
-  getProductDetails,
-} from "../../state/actions/productActions";
+import { getProductDetails } from "../../state/actions/productActions";
+import { addItemToCart } from "../../state/actions/cartActions";
 
 const ProductDetails = () => {
+  const [quantity, setQuantity] = useState(1);
 
-  const {id} = useParams();
-
+  const { id } = useParams();
+  const alert = useAlert();
   const dispatch = useDispatch();
 
-  const { loading, product } = useSelector(
-    (state) => state.productDetails
-  );
+  const { loading, product } = useSelector((state) => state.productDetails);
 
-    useEffect(() => {
-      dispatch(getProductDetails(id))
-    }, [dispatch, id])
+  useEffect(() => {
+    dispatch(getProductDetails(id));
+  }, [dispatch, id]);
+
+  const addToCart = () => {
+    dispatch(addItemToCart(id, quantity));
+    alert.success("Item added to cart");
+  };
 
   return (
     <Fragment>
@@ -38,7 +42,6 @@ const ProductDetails = () => {
 
           <div className="row f-flex justify-content-around">
             <div className="col-12 col-lg-5 img-fluid" id={product.id}>
-              
               <img
                 src="https://i5.walmartimages.com/asr/1223a935-2a61-480a-95a1-21904ff8986c_1.17fa3d7870e3d9b1248da7b1144787f5.jpeg?odnWidth=undefined&odnHeight=undefined&odnBg=ffffff"
                 alt={product.name}
@@ -77,6 +80,8 @@ const ProductDetails = () => {
                 type="button"
                 id="cart_btn"
                 className="btn btn-primary d-inline ml-4"
+                disabled={product.stock === 0}
+                onClick={addToCart}
               >
                 Add to Cart
               </button>

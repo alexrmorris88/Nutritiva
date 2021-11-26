@@ -1,8 +1,8 @@
 // React Components
 import React, { Fragment } from "react";
 import { Link, NavLink } from "react-router-dom";
-import "../../App.css";
 import { useAlert } from "react-alert";
+import "../../App.css";
 
 // Redux Imports
 import { useDispatch, useSelector } from "react-redux";
@@ -13,6 +13,7 @@ const Header = () => {
   const dispatch = useDispatch();
 
   const { user, loading } = useSelector((state) => state.user);
+  const { cartItems } = useSelector((state) => state.cart);
 
   const logoutHandler = () => {
     dispatch(logoutUser());
@@ -42,7 +43,7 @@ const Header = () => {
               Cart
             </span>
             <span className="ml-1" id="cart_count">
-              5
+              {cartItems.length}
             </span>
           </Link>
 
