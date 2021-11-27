@@ -28,6 +28,7 @@ import {
   myOrdersReducer,
   allOrdersReducer,
   orderReducer,
+  newOrderReducer,
 } from "./reducer/ordersReducer";
 
 // Cart Reducers
@@ -52,6 +53,7 @@ const reducers = combineReducers({
   myOrders: myOrdersReducer,
   allOrders: allOrdersReducer,
   order: orderReducer,
+  newOrder: newOrderReducer,
   // Cart Reducer
   cart: cartReducer,
 });

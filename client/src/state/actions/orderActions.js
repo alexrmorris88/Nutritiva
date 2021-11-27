@@ -1,5 +1,8 @@
 import axios from "axios";
 import {
+  CREATE_ORDER_REQUEST,
+  CREATE_ORDER_SUCCESS,
+  CREATE_ORDER_FAIL,
   ORDER_DETAILS_REQUEST,
   ORDER_DETAILS_SUCCESS,
   ORDER_DETAILS_FAIL,
@@ -17,6 +20,33 @@ import {
   UPDATE_ORDERS_FAIL,
   CLEAR_ERRORS,
 } from "../constants/orderConstants";
+
+// Create Order
+export const createOrder = (order) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: CREATE_ORDER_REQUEST,
+    });
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    const { data } = await axios.post("/orders/new", order, config);
+
+    dispatch({
+      type: CREATE_ORDER_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: CREATE_ORDER_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
 
 // Get Order by ID
 export const getOrderDetails = (id) => async (dispatch) => {

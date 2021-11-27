@@ -22,6 +22,8 @@ import ProductReviews from "./components/admin/ProductReviews";
 import Cart from "./components/cart/Cart";
 import Shipping from "./components/cart/Shipping";
 import ConfirmOrder from "./components/cart/confirmOrder";
+import OrderSuccess from "./components/cart/orderSuccess";
+import StripeContainer from "./components/cart/StripeContainer";
 
 // User Components
 import Register from "./components/user/Register";
@@ -217,6 +219,22 @@ function App() {
               exact
             >
               <Route path="/confirm" element={<ConfirmOrder />} exact />
+            </Route>
+
+            <Route
+              path="/payment"
+              element={<ProtectedRoute isAdmin={false} />}
+              exact
+            >
+              <Route path="/payment" element={<StripeContainer />} exact />
+            </Route>
+
+            <Route
+              path="/success"
+              element={<ProtectedRoute isAdmin={false} />}
+              exact
+            >
+              <Route path="/success" element={<OrderSuccess />} exact />
             </Route>
           </Routes>
         </div>

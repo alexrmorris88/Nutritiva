@@ -19,6 +19,7 @@ app.use(cookieParser());
 const products = require("./routes/products");
 const users = require("./routes/users");
 const orders = require("./routes/orders");
+const payment = require("./routes/payment");
 
 // Error Middleware
 const errorMiddleware = require("./errorHandling/errorMiddleware");
@@ -35,6 +36,7 @@ mongoose
 app.use("/products", products);
 app.use("/users", users);
 app.use("/orders", orders);
+app.use("/payment", payment);
 
 // Handling "Undhandled Promise Rejections"
 process.on("unhandledRejection", (err) => {
