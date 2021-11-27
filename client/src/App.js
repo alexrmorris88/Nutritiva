@@ -20,7 +20,8 @@ import ProductReviews from "./components/admin/ProductReviews";
 
 // Cart Components
 import Cart from "./components/cart/Cart";
-import Shipping from "./components/cart/Shoppting";
+import Shipping from "./components/cart/Shipping";
+import ConfirmOrder from "./components/cart/confirmOrder";
 
 // User Components
 import Register from "./components/user/Register";
@@ -208,6 +209,14 @@ function App() {
               exact
             >
               <Route path="/shipping" element={<Shipping />} exact />
+            </Route>
+
+            <Route
+              path="/confirm"
+              element={<ProtectedRoute isAdmin={false} />}
+              exact
+            >
+              <Route path="/confirm" element={<ConfirmOrder />} exact />
             </Route>
           </Routes>
         </div>
