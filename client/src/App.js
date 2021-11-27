@@ -20,6 +20,7 @@ import ProductReviews from "./components/admin/ProductReviews";
 
 // Cart Components
 import Cart from "./components/cart/Cart";
+import Shipping from "./components/cart/Shoppting";
 
 // User Components
 import Register from "./components/user/Register";
@@ -199,6 +200,14 @@ function App() {
               exact
             >
               <Route path="/cart" element={<Cart />} exact />
+            </Route>
+
+            <Route
+              path="/shipping"
+              element={<ProtectedRoute isAdmin={false} />}
+              exact
+            >
+              <Route path="/shipping" element={<Shipping />} exact />
             </Route>
           </Routes>
         </div>
