@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import Payment from "../cart/Payment";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
@@ -18,9 +18,13 @@ const StripeContainer = () => {
   }, []);
 
   return (
-    <Elements stripe={loadStripe(stripeApiKey)}>
-      <Payment />
-    </Elements>
+    <Fragment>
+      {stripeApiKey && (
+        <Elements stripe={loadStripe(stripeApiKey)}>
+          <Payment />
+        </Elements>
+      )}
+    </Fragment>
   );
 };
 
