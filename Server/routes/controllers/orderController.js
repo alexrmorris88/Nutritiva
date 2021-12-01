@@ -64,11 +64,11 @@ exports.allOrders = asyncErrors(async (req, res, next) => {
   }
 });
 
-// @route   GET /orders/
-// @desc    Get User Orders
+// @route   GET /orders/user/:id
+// @desc    Get User Orders by user ID
 // @access  Private
 exports.getUserOrders = asyncErrors(async (req, res, next) => {
-  const orders = await Orders.find({ user: req.user.id });
+  const orders = await Orders.find({ user: req.params.id });
 
   if (orders.length === 0) {
     return next(

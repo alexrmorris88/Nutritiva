@@ -82,7 +82,7 @@ export const orderDetailsReducer = (state = { order: {} }, action) => {
   }
 };
 
-export const myOrdersReducer = (state = { orders: null }, action) => {
+export const myOrdersReducer = (state = { orders: [] }, action) => {
   switch (action.type) {
     case MY_ORDERS_REQUEST:
       return {
@@ -92,13 +92,15 @@ export const myOrdersReducer = (state = { orders: null }, action) => {
     case MY_ORDERS_SUCCESS:
       return {
         loading: false,
-        orders: action.payload,
+        orders: action.payload.orders,
+        totalOrders: action.payload.totalOrders,
       };
 
     case MY_ORDERS_FAIL:
       return {
         loading: false,
         error: action.payload,
+        orders: null,
       };
     case CLEAR_ERRORS:
       return {

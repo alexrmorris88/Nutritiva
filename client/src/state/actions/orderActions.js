@@ -70,15 +70,15 @@ export const getOrderDetails = (id) => async (dispatch) => {
 };
 
 // Get curretly logged in user orders
-export const myOrders = () => async (dispatch) => {
+export const myOrders = (id) => async (dispatch) => {
   try {
     dispatch({ type: MY_ORDERS_REQUEST });
 
-    const { data } = await axios.get("/orders/user");
+    const { data } = await axios.get(`/orders/user/${id}`);
 
     dispatch({
       type: MY_ORDERS_SUCCESS,
-      payload: data.orders,
+      payload: data,
     });
   } catch (error) {
     dispatch({

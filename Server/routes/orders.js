@@ -22,8 +22,8 @@ router
   .route("/all")
   .get(isAuthenticatedUser, authorizeRoles("admin"), allOrders);
 
-// Get User Orders
-router.route("/user").get(isAuthenticatedUser, getUserOrders);
+// Get User Orders by User ID
+router.route("/user/:id").get(isAuthenticatedUser, getUserOrders);
 
 // Delete Order
 router.route("/delete/:id").delete(isAuthenticatedUser, deleteOrder);

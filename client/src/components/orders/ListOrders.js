@@ -18,18 +18,19 @@ const ListOrders = () => {
   const alert = useAlert();
   const dispatch = useDispatch();
 
-  const { loading, error, orders } = useSelector((state) => state.myOrders);
+  const { user } = useSelector((state) => state.user);
+  const { error, orders } = useSelector((state) => state.myOrders);
+
+  console.log(orders);
 
   useEffect(() => {
-    if (orders !== null) {
-      dispatch(myOrders());
-    }
+    dispatch(myOrders(user._id));
 
     if (error) {
       alert.error(error);
       dispatch(clearErrors());
     }
-  }, [dispatch, alert, error, orders]);
+  }, [dispatch, alert, user._id, error]);
 
   const setOrders = () => {
     const data = {
@@ -92,21 +93,13 @@ const ListOrders = () => {
 
       <h1 className="my-5">Orders</h1>
 
-      {loading ? (
-        <Loader />
-      ) : orders === null ? (
-        <h1>
-          <center>You have no orders</center>
-        </h1>
-      ) : (
-        <MDBDataTable
-          data={setOrders()}
-          className="px-3"
-          bordered
-          striped
-          hover
-        />
-      )}
+      <MDBDataTable
+        data={setOrders()}
+        className="px-3"
+        bordered
+        striped
+        hover
+      />
     </Fragment>
   );
 };
