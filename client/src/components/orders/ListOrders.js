@@ -93,13 +93,17 @@ const ListOrders = () => {
 
       <h1 className="my-5">Orders</h1>
 
-      <MDBDataTable
-        data={setOrders()}
-        className="px-3"
-        bordered
-        striped
-        hover
-      />
+      {!orders ? (
+        <h3>No Orders</h3>
+      ) : (
+        <MDBDataTable
+          data={setOrders()}
+          className="px-3"
+          bordered
+          striped
+          hover
+        />
+      )}
     </Fragment>
   );
 };
