@@ -1,9 +1,17 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import { Link } from "react-router-dom";
-
+import { useNavigate } from "react-router";
 import MetaData from "../utils/MetaData";
 
 const OrderSuccess = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setTimeout(() => {
+      navigate("/");
+    }, 2000);
+  });
+
   return (
     <Fragment>
       <MetaData title={"Order Success"} />
@@ -20,8 +28,8 @@ const OrderSuccess = () => {
             />
 
             <h2>Your Order has been placed successfully.</h2>
-
-            <Link to="/orders">Go to Orders</Link>
+            <h5>Redirect in 2 seconds</h5>
+            <Link to="/">Redirected Now</Link>
           </div>
         </div>
       </div>

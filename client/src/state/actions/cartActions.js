@@ -26,13 +26,11 @@ export const addItemToCart = (id, quantity) => async (dispatch, getState) => {
 
 // Remove items from cart
 // This is not an API Call, we are only deleting the item from local sotrage
-export const removeItemFromCart = (id) => async (dispatch, getState) => {
+export const removeItemFromCart = () => (dispatch) => {
   dispatch({
     type: REMOVE_ITEM_FROM_CART,
-    payload: id,
+    payload: localStorage.removeItem("cartItems"),
   });
-
-  localStorage.setItem("cartItems", JSON.stringify(getState().cart.cartItems));
 };
 
 // Save Shipping Info
