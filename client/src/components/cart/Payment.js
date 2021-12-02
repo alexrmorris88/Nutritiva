@@ -102,9 +102,16 @@ const Payment = () => {
       } else {
         // The payment is processed or not
         if (result.paymentIntent.status === "succeeded") {
-          order.paymentInfo = {
-            id: result.paymentIntent.id,
-            status: result.paymentIntent.status,
+          order = {
+            paymentInfo: {
+              id: result.paymentIntent.id,
+              status: result.paymentIntent.status,
+            },
+            orderItems: [
+              {
+                price: result.paymentIntent.payment,
+              },
+            ],
           };
 
           dispatch(createOrder(order));
