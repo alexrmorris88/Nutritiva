@@ -21,8 +21,6 @@ const ListOrders = () => {
   const { user } = useSelector((state) => state.user);
   const { error, orders } = useSelector((state) => state.myOrders);
 
-  console.log(orders);
-
   useEffect(() => {
     dispatch(myOrders(user._id));
 
@@ -64,7 +62,6 @@ const ListOrders = () => {
       rows: [],
     };
 
-    //todo: notworking on a null list
     orders.forEach((order) => {
       data.rows.push({
         id: order._id,
