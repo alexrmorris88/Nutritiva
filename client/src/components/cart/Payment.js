@@ -17,6 +17,7 @@ import {
 } from "@stripe/react-stripe-js";
 
 import axios from "axios";
+import { REMOVE_ITEM_FROM_CART } from "../../state/constants/cartConstants";
 
 const options = {
   style: {
@@ -107,6 +108,11 @@ const Payment = () => {
           };
 
           dispatch(createOrder(order));
+
+          dispatch({
+            type: REMOVE_ITEM_FROM_CART,
+            payload: localStorage.removeItem("cartItems"),
+          });
 
           navigate("/success");
         } else {
