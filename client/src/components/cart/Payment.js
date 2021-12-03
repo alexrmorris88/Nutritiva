@@ -17,7 +17,7 @@ import {
 } from "@stripe/react-stripe-js";
 
 import axios from "axios";
-import { removeItemFromCart } from "../../state/actions/cartActions";
+import { clearCart } from "../../state/actions/cartActions";
 
 const options = {
   style: {
@@ -102,25 +102,20 @@ const Payment = () => {
       } else {
         // The payment is processed or not
         if (result.paymentIntent.status === "succeeded") {
-          order = {
-            paymentInfo: {
-              id: result.paymentIntent.id,
-              status: result.paymentIntent.status,
-            },
-            orderItems: [
-              {
-                price: result.paymentIntent.payment,
-              },
-            ],
+          order.paymentInfo = {
+            id: result.paymentIntent.id,
+            status: result.paymentIntent.status,
           };
 
           dispatch(createOrder(order));
 
-          dispatch(removeItemFromCart());
+          dispatch(clearCart());
 
           navigate("/success");
         } else {
-          alert.error("There is some issue while payment processing");
+          alert.error(
+            "There is some issue while payment processing, please try again."
+          );
         }
       }
     } catch (error) {
