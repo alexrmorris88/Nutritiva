@@ -7,11 +7,10 @@ const sendToken = require("../../utils/jwtTokenCookie");
 // @desc    Create New Order
 // @access  Private
 exports.newOrder = asyncErrors(async (req, res, next) => {
-  const { orderInfo, paymentInfo } = req.body;
+  const { orderInfo } = req.body;
 
   const order = await Orders.create({
     orderInfo,
-    paymentInfo,
     paidAt: Date.now(),
     user: req.user._id,
   });

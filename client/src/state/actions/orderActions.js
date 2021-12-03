@@ -22,37 +22,31 @@ import {
 } from "../constants/orderConstants";
 
 // Create Order
-export const createOrder =
-  (orderInfo, paymentInfo) => async (dispatch, getState) => {
-    try {
-      dispatch({
-        type: CREATE_ORDER_REQUEST,
-      });
+export const createOrder = (orderInfo) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: CREATE_ORDER_REQUEST,
+    });
 
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
 
-      const { data } = await axios.post(
-        "/orders/new",
-        orderInfo,
-        paymentInfo,
-        config
-      );
+    const { data } = await axios.post("/orders/new", orderInfo, config);
 
-      dispatch({
-        type: CREATE_ORDER_SUCCESS,
-        payload: data,
-      });
-    } catch (error) {
-      dispatch({
-        type: CREATE_ORDER_FAIL,
-        payload: error.response.data.message,
-      });
-    }
-  };
+    dispatch({
+      type: CREATE_ORDER_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: CREATE_ORDER_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
 
 // Get Order by ID
 export const getOrderDetails = (id) => async (dispatch) => {

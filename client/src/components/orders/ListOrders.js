@@ -23,14 +23,14 @@ const ListOrders = () => {
 
   useEffect(() => {
     if (orders) {
-      dispatch(myOrders(user._id));
+      return dispatch(myOrders(user._id));
     }
 
     if (error) {
       alert.error(error);
       dispatch(clearErrors());
     }
-  }, [dispatch, alert, user._id, error, orders]);
+  }, [dispatch, alert, user._id, error]);
 
   const setOrders = () => {
     const data = {

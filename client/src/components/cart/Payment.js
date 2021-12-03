@@ -106,20 +106,15 @@ const Payment = () => {
             id: result.paymentIntent.id,
             status: result.paymentIntent.status,
           };
-          order.orderItems = {
-            price: result.paymentIntent.payment,
-            quantity: result.paymentIntent.quantity,
-            name: result.paymentIntent.name,
-          };
 
-          dispatch(createOrder(order.paymentInfo, order.orderItems));
+          dispatch(createOrder(order));
 
           dispatch(clearCart());
 
           navigate("/success");
         } else {
           alert.error(
-            "There is some issue while payment processing, please try again."
+            "There is some issue while payment processing. Please try again."
           );
         }
       }
