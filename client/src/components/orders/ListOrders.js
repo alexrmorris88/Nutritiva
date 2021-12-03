@@ -22,13 +22,15 @@ const ListOrders = () => {
   const { error, orders } = useSelector((state) => state.myOrders);
 
   useEffect(() => {
-    dispatch(myOrders(user._id));
+    if (orders) {
+      dispatch(myOrders(user._id));
+    }
 
     if (error) {
       alert.error(error);
       dispatch(clearErrors());
     }
-  }, [dispatch, alert, user._id, error]);
+  }, [dispatch, alert, user._id, error, orders]);
 
   const setOrders = () => {
     const data = {
@@ -91,7 +93,7 @@ const ListOrders = () => {
       <h1 className="my-5">Orders</h1>
 
       {!orders ? (
-        <h3>No Orders</h3>
+        <h3>You have no orders</h3>
       ) : (
         <MDBDataTable
           data={setOrders()}

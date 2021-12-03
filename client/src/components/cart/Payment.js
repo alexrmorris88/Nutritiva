@@ -106,8 +106,13 @@ const Payment = () => {
             id: result.paymentIntent.id,
             status: result.paymentIntent.status,
           };
+          order.orderItems = {
+            price: result.paymentIntent.payment,
+            quantity: result.paymentIntent.quantity,
+            name: result.paymentIntent.name,
+          };
 
-          dispatch(createOrder(order));
+          dispatch(createOrder(order.paymentInfo, order.orderItems));
 
           dispatch(clearCart());
 
