@@ -83,15 +83,17 @@ const OrderDetails = () => {
               </p>
 
               <h4 className="my-4">Order Status:</h4>
+
               <p
                 className={
-                  order.orderStatus &&
-                  String(order.orderStatus).includes("Delivered")
+                  order.orderStatus && order.orderStatus === "Delivered"
                     ? "greenColor"
+                    : order.orderStatus && order.orderStatus === "Shipped"
+                    ? "orange"
                     : "redColor"
                 }
               >
-                <b>{orderStatus}</b>
+                <b>{orderStatus ? orderStatus : "N/A"}</b>
               </p>
 
               <h4 className="my-4">Order Items:</h4>

@@ -73,6 +73,9 @@ const ListOrders = () => {
           order.orderStatus &&
           String(order.orderStatus).includes("Delivered") ? (
             <p style={{ color: "green" }}>{order.orderStatus}</p>
+          ) : order.orderStatus &&
+            String(order.orderStatus).includes("Shipped") ? (
+            <p style={{ color: "orange" }}>{order.orderStatus}</p>
           ) : (
             <p style={{ color: "red" }}>{order.orderStatus}</p>
           ),
