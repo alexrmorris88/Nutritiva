@@ -39,7 +39,7 @@ const OrdersList = () => {
 
     if (isDeleted) {
       alert.success("Order deleted successfully");
-      navigate("/dashboard");
+      navigate("/admin/orders");
       dispatch({ type: DELETE_ORDERS_RESET });
     }
   }, [dispatch, alert, error, isDeleted, navigate]);

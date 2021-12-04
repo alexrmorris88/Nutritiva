@@ -163,7 +163,7 @@ export const orderReducer = (state = {}, action) => {
       return {
         ...state,
         loading: false,
-        idDeleted: action.payload,
+        isDeleted: action.payload,
       };
 
     case UPDATE_ORDERS_FAIL:
