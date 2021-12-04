@@ -1,9 +1,10 @@
 import React from "react";
 
-const ListReviews = ({ reviews }) => {
+const ListReviews = ({ reviews, productName }) => {
   return (
     <div class="reviews w-75">
-      <h3>Other's Reviews:</h3>
+      <h3>Reviews:</h3>
+      <h6>Reviews for {productName}</h6>
       <hr />
       {reviews &&
         reviews.map((review) => (
