@@ -21,6 +21,9 @@ import {
   GET_REVIEW_REQUEST,
   GET_REVIEW_SUCCESS,
   GET_REVIEW_FAIL,
+  NEW_REVIEW_REQUEST,
+  NEW_REVIEW_SUCCESS,
+  NEW_REVIEW_FAIL,
   DELETE_REVIEW_REQUEST,
   DELETE_REVIEW_SUCCESS,
   DELETE_REVIEW_FAIL,
@@ -183,6 +186,35 @@ export const getProductReviews = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: GET_REVIEW_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+// New Product Review
+export const newReview = (reviewData) => async (dispatch) => {
+  try {
+    dispatch({ type: NEW_REVIEW_REQUEST });
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    const { data } = await axios.put(
+      `/products/reviews/create`,
+      reviewData,
+      config
+    );
+
+    dispatch({
+      type: NEW_REVIEW_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: NEW_REVIEW_FAIL,
       payload: error.response.data.message,
     });
   }

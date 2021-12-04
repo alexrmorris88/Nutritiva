@@ -9,29 +9,50 @@ import Loader from "../utils/Loader";
 
 // Redux Imports
 import { useDispatch, useSelector } from "react-redux";
+import { newReview, clearErrors } from "../../state/actions/productActions";
+import { NEW_REVIEW_RESET } from "../../state/constants/productConstants";
 
 // Component Imports
 import { getProductDetails } from "../../state/actions/productActions";
 import { addItemToCart } from "../../state/actions/cartActions";
+import ListReviews from "../reviews/ListReviews";
 
 const ProductDetails = () => {
+  // Set State
   const [quantity, setQuantity] = useState(1);
+  const [rating, setRating] = useState(0);
+  const [comment, setComment] = useState("");
 
+  const { loading, product } = useSelector((state) => state.productDetails);
+  const { user } = useSelector((state) => state.user);
+  const { reviewError, success } = useSelector((state) => state.newReview);
+
+  // Utils
   const { id } = useParams();
   const alert = useAlert();
   const dispatch = useDispatch();
 
-  const { loading, product } = useSelector((state) => state.productDetails);
-
+  // useEffect
   useEffect(() => {
     dispatch(getProductDetails(id));
-  }, [dispatch, id]);
+
+    if (reviewError) {
+      alert.error(reviewError);
+      dispatch(clearErrors());
+    }
+
+    if (success) {
+      alert.success("Reivew posted successfully");
+      dispatch({ type: NEW_REVIEW_RESET });
+    }
+  }, [dispatch, alert, reviewError, id, success]);
 
   const addToCart = () => {
     dispatch(addItemToCart(id, quantity));
     alert.success("Item added to cart");
   };
 
+  // Increase Qty Function
   const increaseQty = () => {
     const count = document.querySelector(".count");
 
@@ -41,6 +62,7 @@ const ProductDetails = () => {
     setQuantity(qty);
   };
 
+  // Decrease Qty Function
   const decreaseQty = () => {
     const count = document.querySelector(".count");
 
@@ -48,6 +70,57 @@ const ProductDetails = () => {
 
     const qty = count.valueAsNumber - 1;
     setQuantity(qty);
+  };
+
+  // Set User Rating Function
+  function setUserRatings() {
+    const stars = document.querySelectorAll(".star");
+
+    stars.forEach((star, index) => {
+      star.starValue = index + 1;
+
+      ["click", "mouseover", "mouseout"].forEach(function (e) {
+        star.addEventListener(e, showRatings);
+      });
+    });
+
+    // Show User Rating Function
+    function showRatings(e) {
+      stars.forEach((star, index) => {
+        if (e.type === "click") {
+          if (index < this.starValue) {
+            star.classList.add("orange");
+
+            setRating(this.starValue);
+          } else {
+            star.classList.remove("orange");
+          }
+        }
+
+        if (e.type === "mouseover") {
+          if (index < this.starValue) {
+            star.classList.add("yellow");
+          } else {
+            star.classList.remove("yellow");
+          }
+        }
+
+        if (e.type === "mouseout") {
+          star.classList.remove("yellow");
+        }
+      });
+    }
+  }
+
+  // Review Handler
+  const reviewHandler = () => {
+    const formData = {
+      rating: rating,
+      comment: comment,
+      productId: id,
+    };
+
+    dispatch(newReview(formData));
   };
 
   return (
@@ -70,14 +143,17 @@ const ProductDetails = () => {
 
             <div className="col-12 col-lg-5 mt-5">
               <h3>{product.name}</h3>
-              <p id="product_id">Product # {product.sku}</p>
+              <p id="product_id">Product # {id}</p>
 
               <hr />
 
               <div className="rating-outer">
-                <div className="rating-inner"></div>
+                <div
+                  className="rating-inner"
+                  style={{ width: `${(product.ratings / 5) * 100}%` }}
+                ></div>
               </div>
-              <span id="no_of_reviews">(5 Reviews)</span>
+              <span id="no_of_reviews">({product.numOfReviews} Reviews)</span>
 
               <hr />
 
@@ -111,7 +187,15 @@ const ProductDetails = () => {
               <hr />
 
               <p>
-                Status: <span id="stock_status">In Stock</span>
+                Stock:{" "}
+                <span
+                  id="stock_status"
+                  className={product.stock > 0 ? "greenColor" : "redColor"}
+                >
+                  {product.stock > 0
+                    ? `${product.stock} In Stock`
+                    : "Out of Stock"}
+                </span>
               </p>
 
               <hr />
@@ -123,15 +207,22 @@ const ProductDetails = () => {
                 Sold by: <strong>{product.seller}</strong>
               </p>
 
-              <button
-                id="review_btn"
-                type="button"
-                className="btn btn-primary mt-4"
-                data-toggle="modal"
-                data-target="#ratingModal"
-              >
-                Submit Your Review
-              </button>
+              {user ? (
+                <button
+                  id="review_btn"
+                  type="button"
+                  className="btn btn-primary mt-4"
+                  data-toggle="modal"
+                  data-target="#ratingModal"
+                  onClick={setUserRatings}
+                >
+                  Submit Your Review
+                </button>
+              ) : (
+                <div className="alert alert-danger mt-5" type="alert">
+                  Login to post your review.
+                </div>
+              )}
 
               <div className="row mt-2 mb-5">
                 <div className="rating w-50">
@@ -181,10 +272,13 @@ const ProductDetails = () => {
                             name="review"
                             id="review"
                             className="form-control mt-3"
+                            value={comment}
+                            onChange={(e) => setComment(e.target.value)}
                           ></textarea>
 
                           <button
                             className="btn my-3 float-right review-btn px-4 text-white"
+                            onClick={reviewHandler}
                             data-dismiss="modal"
                             aria-label="Close"
                           >
@@ -198,6 +292,9 @@ const ProductDetails = () => {
               </div>
             </div>
           </div>
+          {product.reviews && product.reviews.length > 0 && (
+            <ListReviews reviews={product.reviews} />
+          )}
         </Fragment>
       )}
     </Fragment>

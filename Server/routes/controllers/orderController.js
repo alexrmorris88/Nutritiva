@@ -69,21 +69,21 @@ exports.getSingleOrder = asyncErrors(async (req, res, next) => {
 // @desc    Get all orders
 // @access  Private/Admin
 exports.allOrders = asyncErrors(async (req, res, next) => {
-  const orders = await Orders.find();
+  const order = await Orders.find();
 
   let totalAmount = 0;
-  orders.map((order) => {
-    totalAmount += order.totalPrice;
+  order.map((eachOrder) => {
+    totalAmount += eachOrder.totalPrice;
   });
 
   res.status(200).json({
     success: true,
-    totalOrders: orders.length,
+    totalOrders: order.length,
     totalAmount,
-    orders,
+    order,
   });
 
-  if (!orders) {
+  if (!order) {
     return res.status(404).json({
       success: false,
       message: "No orders available",

@@ -1,9 +1,6 @@
 import React from "react";
-import { useParams } from "react-router";
 
-const ListReviews = () => {
-  const { reviews } = useParams();
-
+const ListReviews = ({ reviews }) => {
   return (
     <div class="reviews w-75">
       <h3>Other's Reviews:</h3>
@@ -17,7 +14,9 @@ const ListReviews = () => {
                 style={{ width: `${(review.rating / 5) * 100}%` }}
               ></div>
             </div>
-            <p class="review_user">by {review.name}</p>
+            <p class="review_user">
+              by {review.firstName + " " + review.lastName}
+            </p>
             <p class="review_comment">{review.comment}</p>
 
             <hr />

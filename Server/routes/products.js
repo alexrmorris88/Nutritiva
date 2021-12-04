@@ -42,9 +42,6 @@ router
   .get(isAuthenticatedUser, authorizeRoles("admin"), getAdminProducts);
 
 // Private - Create Product Reviews
-router.route("/reviews/create").post(isAuthenticatedUser, createProductReviews);
-
-// Private - Create Product Reviews
 router.route("/reviews/create").put(isAuthenticatedUser, createProductReviews);
 
 // Private - Create/Delete Product Reviews
