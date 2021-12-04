@@ -34,6 +34,7 @@ const ProcessOrder = () => {
     orderItems,
     paymentInfo,
     user,
+    userName,
     totalPrice,
     orderStatus,
   } = order;
@@ -89,7 +90,7 @@ const ProcessOrder = () => {
 
                   <h4 className="mb-4">Shipping Info</h4>
                   <p>
-                    <b>Name:</b> {user && user.name}
+                    <b>Name:</b> {userName && userName}
                   </p>
                   <p>
                     <b>Phone:</b> {shippingInfo && shippingInfo.phoneNo}
@@ -117,9 +118,10 @@ const ProcessOrder = () => {
                   <h4 className="my-4">Order Status:</h4>
                   <p
                     className={
-                      order.orderStatus &&
-                      String(order.orderStatus).includes("Delivered")
+                      order.orderStatus && order.orderStatus === "Delivered"
                         ? "greenColor"
+                        : order.orderStatus && order.orderStatus === "Shipped"
+                        ? "orange"
                         : "redColor"
                     }
                   >
