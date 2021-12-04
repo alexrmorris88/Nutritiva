@@ -69,15 +69,19 @@ exports.getSingleOrder = asyncErrors(async (req, res, next) => {
 // @desc    Get all orders
 // @access  Private/Admin
 exports.allOrders = asyncErrors(async (req, res, next) => {
-  const orders = await Orders.find()
-    .then((order) =>
-      res.status(200).json({
-        totalOrders: order.length,
-        success: true,
-        order,
-      })
-    )
-    .catch((err) => res.status(404).json(err.message));
+  const orders = await Orders.find();
+
+  let totalAmount = 0;
+  orders.map((order) => {
+    totalAmount += order.totalPrice;
+  });
+
+  res.status(200).json({
+    success: true,
+    totalOrders: orders.length,
+    totalAmount,
+    orders,
+  });
 
   if (!orders) {
     return res.status(404).json({
