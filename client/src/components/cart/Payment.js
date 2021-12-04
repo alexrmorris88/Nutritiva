@@ -39,7 +39,7 @@ const Payment = () => {
 
   const { user } = useSelector((state) => state.user);
   const { cartItems, shippingInfo } = useSelector((state) => state.cart);
-  const { error } = useSelector((state) => state.newOrder);
+  const { error, success } = useSelector((state) => state.newOrder);
 
   useEffect(() => {
     if (error) {
@@ -54,11 +54,12 @@ const Payment = () => {
   };
 
   const orderInfo = JSON.parse(sessionStorage.getItem("orderInfo"));
+
   if (orderInfo) {
-    order.itemsPrice = orderInfo.itemsPrice;
+    order.itemsPrice = Number(orderInfo.itemsPrice);
     order.shippingPrice = orderInfo.shippingPrice;
     order.taxPrice = orderInfo.taxPrice;
-    order.totalPrice = orderInfo.totalPrice;
+    order.totalPrice = Number(orderInfo.totalPrice);
   }
 
   const paymentData = {
@@ -96,7 +97,7 @@ const Payment = () => {
         },
       });
 
-      if (result.error) {
+      if (error) {
         alert.error(result.error.message);
         document.querySelector("#pay_btn").disabled = false;
       } else {
@@ -107,11 +108,18 @@ const Payment = () => {
             status: result.paymentIntent.status,
           };
 
-          dispatch(createOrder(order));
+          order.paidAt = Date.now();
+          order.name = user.firstName + " " + user.lastName;
 
-          dispatch(clearCart());
+          await dispatch(createOrder(order));
 
-          navigate("/success");
+          if (error) {
+            alert.error(result.error.message);
+          } else {
+            await dispatch(clearCart());
+
+            navigate("/success");
+          }
         } else {
           alert.error(
             "There is some issue while payment processing. Please try again."

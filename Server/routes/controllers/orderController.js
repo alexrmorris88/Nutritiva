@@ -7,21 +7,43 @@ const sendToken = require("../../utils/jwtTokenCookie");
 // @desc    Create New Order
 // @access  Private
 exports.newOrder = asyncErrors(async (req, res, next) => {
-  const { orderInfo } = req.body;
+  try {
+    const {
+      orderItems,
+      shippingInfo,
+      itemsPrice,
+      taxPrice,
+      shippingPrice,
+      totalPrice,
+      paymentInfo,
+    } = req.body;
 
-  const order = await Orders.create({
-    orderInfo,
-    paidAt: Date.now(),
-    user: req.user._id,
-  });
+    const order = await Orders.create({
+      orderItems,
+      shippingInfo,
+      itemsPrice,
+      taxPrice,
+      shippingPrice,
+      totalPrice,
+      paymentInfo,
+      paidAt: Date.now(),
+      user: req.user._id,
+      userName: req.user.firstName + " " + req.user.lastName,
+    });
 
-  res.status(200).json({
-    success: true,
-    order,
-  });
+    res.status(200).json({
+      success: true,
+      order,
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: error.stack,
+    });
+  }
 });
 
-// @route   GET /orders/:id
+// @route   GET /orders/id/:id
 // @desc    Get a Single Order by ID
 // @access  Private
 exports.getSingleOrder = asyncErrors(async (req, res, next) => {

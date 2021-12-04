@@ -22,11 +22,19 @@ const orderSchema = mongoose.Schema({
       type: String,
       required: false,
     },
+    name: {
+      type: String,
+      require: false,
+    },
   },
   user: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
     ref: "User",
+  },
+  userName: {
+    type: String,
+    required: true,
   },
   orderItems: [
     {
@@ -67,7 +75,7 @@ const orderSchema = mongoose.Schema({
 
   itemsPrice: {
     type: Number,
-    required: true,
+    required: false,
     default: 0.0,
   },
   taxPrice: {
@@ -87,7 +95,7 @@ const orderSchema = mongoose.Schema({
   },
   orderStatus: {
     type: String,
-    required: false,
+    required: true,
     default: "Processing",
   },
   deliveredAt: {
@@ -99,4 +107,4 @@ const orderSchema = mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("Orders", orderSchema);
+module.exports = mongoose.model("Order", orderSchema);

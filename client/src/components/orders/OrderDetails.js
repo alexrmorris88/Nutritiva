@@ -27,6 +27,7 @@ const OrderDetails = () => {
     orderItems,
     paymentInfo,
     user,
+    userName,
     totalPrice,
     orderStatus,
   } = order;
@@ -61,7 +62,7 @@ const OrderDetails = () => {
 
               <h4 className="mb-4">Shipping Info</h4>
               <p>
-                <b>Name:</b> {user && user.name}
+                <b>Name:</b> {userName && userName}
               </p>
               <p>
                 <b>Phone:</b> {shippingInfo && shippingInfo.phoneNo}
