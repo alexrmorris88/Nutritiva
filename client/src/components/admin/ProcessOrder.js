@@ -179,7 +179,7 @@ const ProcessOrder = () => {
 
                   <button
                     className="btn btn-primary btn-block"
-                    onClick={() => updateOrderHandler(order._id)}
+                    onClick={() => updateOrderHandler(orderId)}
                   >
                     Update Status
                   </button>

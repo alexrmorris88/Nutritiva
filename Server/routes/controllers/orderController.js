@@ -1,4 +1,5 @@
 const Orders = require("../../models/orderSchema");
+const Product = require("../../models/productSchema");
 const asyncErrors = require("../../errorHandling/aysncErrors");
 const ErrorHandler = require("../../errorHandling/ErrorHandler");
 const sendToken = require("../../utils/jwtTokenCookie");
@@ -114,6 +115,10 @@ exports.getUserOrders = asyncErrors(async (req, res, next) => {
 exports.deleteOrder = asyncErrors(async (req, res, next) => {
   const order = await Orders.findById(req.params.id);
 
+  if (!order) {
+    return next(new ErrorHandler("No Order found with this ID", 404));
+  }
+
   order.remove();
 
   res.status(200).json({
@@ -128,15 +133,6 @@ exports.deleteOrder = asyncErrors(async (req, res, next) => {
 exports.findOrderByID = asyncErrors(async (req, res, next) => {
   const order = await Orders.findById(req.params.id);
 
-  if (!order) {
-    return next(
-      res.status(200).json({
-        success: false,
-        message: "Order not found",
-      })
-    );
-  }
-
   if (order.orderStatus === "Delivered") {
     return next(new ErrorHandler("You have already delivered this order", 400));
   }
@@ -145,7 +141,8 @@ exports.findOrderByID = asyncErrors(async (req, res, next) => {
     await updateStock(item.product, item.quantity);
   });
 
-  (order.orderStatus = req.body.status), (order.deliveredAt = Date.now());
+  order.orderStatus = req.body.status;
+  order.deliveredAt = Date.now();
 
   await order.save();
 

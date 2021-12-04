@@ -109,7 +109,6 @@ const Payment = () => {
           };
 
           order.paidAt = Date.now();
-          order.name = user.firstName + " " + user.lastName;
 
           await dispatch(createOrder(order));
 
