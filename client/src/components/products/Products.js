@@ -34,6 +34,7 @@ const Products = ({ product, col }) => {
           <Typography variant="h6" component="p">
             ${product.price}
           </Typography>
+
           <Button
             type="submit"
             variant="contained"
