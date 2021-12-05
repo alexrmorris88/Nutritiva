@@ -39,7 +39,7 @@ const Payment = () => {
 
   const { user } = useSelector((state) => state.user);
   const { cartItems, shippingInfo } = useSelector((state) => state.cart);
-  const { error, success } = useSelector((state) => state.newOrder);
+  const { error } = useSelector((state) => state.newOrder);
 
   useEffect(() => {
     if (error) {

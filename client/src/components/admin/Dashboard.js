@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import MetaData from "../utils/MetaData";
 import Loader from "../utils/Loader";
 import Sidebar from "./Sidebar";
+import { commaSeparator } from "../utils/commonFunctions";
 
 import { useDispatch, useSelector } from "react-redux";
 
@@ -55,7 +56,12 @@ const Dashboard = () => {
                     <div className="card-body">
                       <div className="text-center card-font-size">
                         Total Amount
-                        <br /> <b>${totalAmount && totalAmount.toFixed(2)}</b>
+                        <br />{" "}
+                        <b>
+                          $
+                          {totalAmount &&
+                            commaSeparator(totalAmount.toFixed(2))}
+                        </b>
                       </div>
                     </div>
                   </div>

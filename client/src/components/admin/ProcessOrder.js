@@ -33,7 +33,6 @@ const ProcessOrder = () => {
     shippingInfo,
     orderItems,
     paymentInfo,
-    user,
     userName,
     totalPrice,
     orderStatus,

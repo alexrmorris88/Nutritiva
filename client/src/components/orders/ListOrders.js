@@ -19,7 +19,7 @@ const ListOrders = () => {
   const dispatch = useDispatch();
 
   const { user } = useSelector((state) => state.user);
-  const { error, orders } = useSelector((state) => state.myOrders);
+  const { error, orders, loading } = useSelector((state) => state.myOrders);
 
   useEffect(() => {
     if (orders) {
@@ -95,7 +95,9 @@ const ListOrders = () => {
 
       <h1 className="my-5">Orders</h1>
 
-      {!orders ? (
+      {loading ? (
+        <Loader />
+      ) : !orders ? (
         <h3>You have no orders</h3>
       ) : (
         <MDBDataTable
