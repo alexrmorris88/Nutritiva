@@ -56,185 +56,131 @@ function App() {
         <Header />
         <div className="container container-fluid">
           <Routes>
-            <Route path="/" element={<Home />} exact />
-            <Route path="/register" element={<Register />} exact />
+            <Route path="/" element={<Home />} />
+            <Route path="/register" element={<Register />} />
 
-            <Route path="/login" element={<Login />} exact />
+            <Route path="/login" element={<Login />} />
 
-            <Route path="/products/:id" element={<ProductDetails />} exact />
-            <Route path="/forgot-password" element={<ForgotPassword />} exact />
+            <Route path="/products/:id" element={<ProductDetails />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route
               path="/users/reset-password/:token"
               element={<NewPassword />}
-              exact
             />
 
-            <Route
-              path="/profile"
-              element={<ProtectedRoute isAdmin={false} />}
-              exact
-            >
-              <Route path="/profile" element={<Profile />} exact />
+            <Route path="/profile" element={<ProtectedRoute isAdmin={false} />}>
+              <Route path="/profile" element={<Profile />} />
             </Route>
 
             <Route
               path="/update-profile"
               element={<ProtectedRoute isAdmin={false} />}
-              exact
             >
-              <Route path="/update-profile" element={<UpdateProfile />} exact />
+              <Route path="/update-profile" element={<UpdateProfile />} />
             </Route>
 
             <Route
               path="/update-password"
               element={<ProtectedRoute isAdmin={false} />}
-              exact
             >
-              <Route
-                path="/update-password"
-                element={<UpdatePassword />}
-                exact
-              />
+              <Route path="/update-password" element={<UpdatePassword />} />
             </Route>
 
-            <Route
-              path="/orders"
-              element={<ProtectedRoute isAdmin={false} />}
-              exact
-            >
-              <Route path="/orders" element={<ListOrders />} exact />
+            <Route path="/orders" element={<ProtectedRoute isAdmin={false} />}>
+              <Route path="/orders" element={<ListOrders />} />
             </Route>
 
             <Route
               path="/orders/:id"
               element={<ProtectedRoute isAdmin={false} />}
-              exact
             >
-              <Route path="/orders/:id" element={<OrderDetails />} exact />
+              <Route path="/orders/:id" element={<OrderDetails />} />
             </Route>
 
             <Route
               path="/dashboard"
               element={<ProtectedRoute isAdmin={true} />}
-              exact
             >
-              <Route path="/dashboard" element={<Dashboard />} exact />
+              <Route path="/dashboard" element={<Dashboard />} />
             </Route>
 
             <Route
               path="/admin/products"
               element={<ProtectedRoute isAdmin={true} />}
-              exact
             >
-              <Route path="/admin/products" element={<ProductList />} exact />
+              <Route path="/admin/products" element={<ProductList />} />
             </Route>
 
             <Route
               path="/admin/products/:id"
               element={<ProtectedRoute isAdmin={true} />}
-              exact
             >
-              <Route
-                path="/admin/products/:id"
-                element={<UpdateProduct />}
-                exact
-              />
+              <Route path="/admin/products/:id" element={<UpdateProduct />} />
             </Route>
 
             <Route
               path="/admin/products/new"
               element={<ProtectedRoute isAdmin={true} />}
-              exact
             >
-              <Route
-                path="/admin/products/new"
-                element={<NewProduct />}
-                exact
-              />
+              <Route path="/admin/products/new" element={<NewProduct />} />
             </Route>
 
             <Route
               path="/admin/orders"
               element={<ProtectedRoute isAdmin={true} />}
-              exact
             >
-              <Route path="/admin/orders" element={<OrdersList />} exact />
+              <Route path="/admin/orders" element={<OrdersList />} />
             </Route>
 
             <Route
               path="/admin/order/:id"
               element={<ProtectedRoute isAdmin={true} />}
-              exact
             >
-              <Route path="/admin/order/:id" element={<ProcessOrder />} exact />
+              <Route path="/admin/order/:id" element={<ProcessOrder />} />
             </Route>
 
             <Route
               path="/admin/users"
               element={<ProtectedRoute isAdmin={true} />}
-              exact
             >
-              <Route path="/admin/users" element={<UsersList />} exact />
+              <Route path="/admin/users" element={<UsersList />} />
             </Route>
 
             <Route
               path="/admin/user/:id"
               element={<ProtectedRoute isAdmin={true} />}
-              exact
             >
-              <Route path="/admin/user/:id" element={<UpdateUser />} exact />
+              <Route path="/admin/user/:id" element={<UpdateUser />} />
             </Route>
 
             <Route
               path="/product/reviews"
               element={<ProtectedRoute isAdmin={true} />}
-              exact
             >
-              <Route
-                path="/product/reviews"
-                element={<ProductReviews />}
-                exact
-              />
+              <Route path="/product/reviews" element={<ProductReviews />} />
             </Route>
 
-            <Route
-              path="/cart"
-              element={<ProtectedRoute isAdmin={false} />}
-              exact
-            >
-              <Route path="/cart" element={<Cart />} exact />
+            <Route path="/cart" element={<ProtectedRoute isAdmin={false} />}>
+              <Route path="/cart" element={<Cart />} />
             </Route>
 
             <Route
               path="/shipping"
               element={<ProtectedRoute isAdmin={false} />}
-              exact
             >
-              <Route path="/shipping" element={<Shipping />} exact />
+              <Route path="/shipping" element={<Shipping />} />
             </Route>
 
-            <Route
-              path="/confirm"
-              element={<ProtectedRoute isAdmin={false} />}
-              exact
-            >
-              <Route path="/confirm" element={<ConfirmOrder />} exact />
+            <Route path="/confirm" element={<ProtectedRoute isAdmin={false} />}>
+              <Route path="/confirm" element={<ConfirmOrder />} />
             </Route>
 
-            <Route
-              path="/payment"
-              element={<ProtectedRoute isAdmin={false} />}
-              exact
-            >
-              <Route path="/payment" element={<StripeContainer />} exact />
+            <Route path="/payment" element={<ProtectedRoute isAdmin={false} />}>
+              <Route path="/payment" element={<StripeContainer />} />
             </Route>
 
-            <Route
-              path="/success"
-              element={<ProtectedRoute isAdmin={false} />}
-              exact
-            >
-              <Route path="/success" element={<OrderSuccess />} exact />
+            <Route path="/success" element={<ProtectedRoute isAdmin={false} />}>
+              <Route path="/success" element={<OrderSuccess />} />
             </Route>
           </Routes>
         </div>

@@ -1,7 +1,7 @@
 // React Components Imports
 import React, { Fragment, useState, useEffect } from "react";
 import { useAlert } from "react-alert";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 // Utils Imports
 import MetaData from "../utils/MetaData";
@@ -29,7 +29,7 @@ const Register = () => {
     (state) => state.user
   );
 
-  // Navigate to a different page 
+  // Navigate to a different page
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -62,7 +62,7 @@ const Register = () => {
   };
 
   return (
-    // User JSX form 
+    // User JSX form
     <Fragment>
       <MetaData title={"Register"} />
 
@@ -83,7 +83,7 @@ const Register = () => {
                 className="form-control"
                 name="firstName"
                 value={firstName}
-                onChange={e => setFirstName(e.target.value)}
+                onChange={(e) => setFirstName(e.target.value)}
               />
             </div>
 
@@ -95,7 +95,7 @@ const Register = () => {
                 className="form-control"
                 name="lastName"
                 value={lastName}
-                onChange={e => setLastName(e.target.value)}
+                onChange={(e) => setLastName(e.target.value)}
               />
             </div>
 
@@ -107,7 +107,7 @@ const Register = () => {
                 className="form-control"
                 name="email"
                 value={email}
-                onChange={e => setEmail(e.target.value)}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
 
@@ -119,7 +119,7 @@ const Register = () => {
                 className="form-control"
                 name="password"
                 value={password}
-                onChange={e => setPassword(e.target.value)}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
 
@@ -131,7 +131,7 @@ const Register = () => {
                 className="form-control"
                 name="confirmPassword"
                 value={confirmPassword}
-                onChange={e => setConfirmPassword(e.target.value)}
+                onChange={(e) => setConfirmPassword(e.target.value)}
               />
             </div>
 

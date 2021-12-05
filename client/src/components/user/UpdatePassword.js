@@ -1,7 +1,7 @@
 // React Imports
 import React, { Fragment, useState, useEffect } from "react";
 import { useAlert } from "react-alert";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 // Uitls Imports
 import MetaData from "../utils/MetaData";
@@ -45,7 +45,7 @@ const UpdatePassword = () => {
     const formData = {
       password: password,
       confirmPassword: confirmPassword,
-      oldPassword: oldPassword
+      oldPassword: oldPassword,
     };
 
     dispatch(updatePassword(formData));

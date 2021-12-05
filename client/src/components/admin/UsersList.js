@@ -2,7 +2,7 @@
 import React, { Fragment, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAlert } from "react-alert";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 // MDB Data Table
 import { MDBDataTable } from "mdbreact";

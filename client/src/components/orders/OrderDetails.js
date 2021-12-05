@@ -2,7 +2,7 @@
 import React, { Fragment, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAlert } from "react-alert";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 
 // Utils Imports
 import MetaData from "../utils/MetaData";

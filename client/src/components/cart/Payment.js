@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 import MetaData from "../utils/MetaData";
 import CheckoutSteps from "./checkoutSteps";

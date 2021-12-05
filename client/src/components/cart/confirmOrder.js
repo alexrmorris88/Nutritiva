@@ -1,7 +1,7 @@
 // React
 import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 // Redux Import
 import { useSelector } from "react-redux";

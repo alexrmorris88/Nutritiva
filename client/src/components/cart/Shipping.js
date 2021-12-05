@@ -1,7 +1,7 @@
 // React
 import React, { Fragment, useState } from "react";
 import { countries } from "countries-list";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 // Redux Import
 import { useDispatch, useSelector } from "react-redux";

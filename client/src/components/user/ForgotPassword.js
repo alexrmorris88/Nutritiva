@@ -1,6 +1,6 @@
 // React Import
 import React, { Fragment, useState, useEffect } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import { useAlert } from "react-alert";
 
 // Redux Import
@@ -28,7 +28,7 @@ const ForgotPassword = () => {
 
     if (message) {
       alert.success(message);
-      navigate("/login")
+      navigate("/login");
     }
   }, [dispatch, alert, error, navigate, message]);
 
@@ -48,10 +48,7 @@ const ForgotPassword = () => {
       <MetaData title={"Forgot Password"} />
       <div className="row wrapper">
         <div className="col-10 col-lg-5">
-          <form 
-          className="shadow-lg"
-          onSubmit={submitHandler}
-          >
+          <form className="shadow-lg" onSubmit={submitHandler}>
             <h1 className="mb-3">Forgot Password</h1>
             <div className="form-group">
               <label htmlFor="email_field">Enter Email</label>
@@ -61,7 +58,7 @@ const ForgotPassword = () => {
                 className="form-control"
                 name="email"
                 value={Email}
-                onChange={e => setEmail(e.target.value)}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
 

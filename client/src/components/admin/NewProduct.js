@@ -1,6 +1,6 @@
 // React
 import React, { Fragment, useEffect, useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 // Redux Import
 import { useDispatch, useSelector } from "react-redux";

@@ -1,7 +1,7 @@
 // React
 import React, { Fragment, useEffect, useState } from "react";
 import { useAlert } from "react-alert";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 // MDB Data Table
 import { MDBDataTable } from "mdbreact";

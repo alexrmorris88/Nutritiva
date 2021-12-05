@@ -1,8 +1,7 @@
 // React
 import React, { Fragment, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { useAlert } from "react-alert";
-import { useParams, useNavigate } from "react-router";
+import { useNavigate, useParams, Link } from "react-router-dom";
 
 // Redux Import
 import { useDispatch, useSelector } from "react-redux";

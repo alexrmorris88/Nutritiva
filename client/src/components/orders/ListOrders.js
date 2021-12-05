@@ -22,9 +22,7 @@ const ListOrders = () => {
   const { error, orders, loading } = useSelector((state) => state.myOrders);
 
   useEffect(() => {
-    if (orders) {
-      return dispatch(myOrders(user._id));
-    }
+    dispatch(myOrders(user._id));
 
     if (error) {
       alert.error(error);
