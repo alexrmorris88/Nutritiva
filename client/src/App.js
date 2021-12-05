@@ -45,148 +45,171 @@ import { loadUser } from "./state/actions/userActions";
 import store from "./state/Store";
 import Profile from "./components/user/Profile";
 
+// UI theme
+import { ThemeProvider } from "@mui/material/styles";
+import { useTheme } from "./theme/theme";
+
 function App() {
+  const theme = useTheme();
+
   useEffect(() => {
     store.dispatch(loadUser());
   }, []);
 
   return (
-    <Router>
-      <div className="App">
-        <Header />
-        <div className="container container-fluid">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/register" element={<Register />} />
+    <ThemeProvider theme={theme}>
+      <Router>
+        <div className="App">
+          <Header />
+          <div className="container container-fluid">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/register" element={<Register />} />
 
-            <Route path="/login" element={<Login />} />
+              <Route path="/login" element={<Login />} />
 
-            <Route path="/products/:id" element={<ProductDetails />} />
-            <Route path="/forgot-password" element={<ForgotPassword />} />
-            <Route
-              path="/users/reset-password/:token"
-              element={<NewPassword />}
-            />
+              <Route path="/products/:id" element={<ProductDetails />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
+              <Route
+                path="/users/reset-password/:token"
+                element={<NewPassword />}
+              />
 
-            <Route path="/profile" element={<ProtectedRoute isAdmin={false} />}>
-              <Route path="/profile" element={<Profile />} />
-            </Route>
+              <Route
+                path="/profile"
+                element={<ProtectedRoute isAdmin={false} />}
+              >
+                <Route path="/profile" element={<Profile />} />
+              </Route>
 
-            <Route
-              path="/update-profile"
-              element={<ProtectedRoute isAdmin={false} />}
-            >
-              <Route path="/update-profile" element={<UpdateProfile />} />
-            </Route>
+              <Route
+                path="/update-profile"
+                element={<ProtectedRoute isAdmin={false} />}
+              >
+                <Route path="/update-profile" element={<UpdateProfile />} />
+              </Route>
 
-            <Route
-              path="/update-password"
-              element={<ProtectedRoute isAdmin={false} />}
-            >
-              <Route path="/update-password" element={<UpdatePassword />} />
-            </Route>
+              <Route
+                path="/update-password"
+                element={<ProtectedRoute isAdmin={false} />}
+              >
+                <Route path="/update-password" element={<UpdatePassword />} />
+              </Route>
 
-            <Route path="/orders" element={<ProtectedRoute isAdmin={false} />}>
-              <Route path="/orders" element={<ListOrders />} />
-            </Route>
+              <Route
+                path="/orders"
+                element={<ProtectedRoute isAdmin={false} />}
+              >
+                <Route path="/orders" element={<ListOrders />} />
+              </Route>
 
-            <Route
-              path="/orders/:id"
-              element={<ProtectedRoute isAdmin={false} />}
-            >
-              <Route path="/orders/:id" element={<OrderDetails />} />
-            </Route>
+              <Route
+                path="/orders/:id"
+                element={<ProtectedRoute isAdmin={false} />}
+              >
+                <Route path="/orders/:id" element={<OrderDetails />} />
+              </Route>
 
-            <Route
-              path="/dashboard"
-              element={<ProtectedRoute isAdmin={true} />}
-            >
-              <Route path="/dashboard" element={<Dashboard />} />
-            </Route>
+              <Route
+                path="/dashboard"
+                element={<ProtectedRoute isAdmin={true} />}
+              >
+                <Route path="/dashboard" element={<Dashboard />} />
+              </Route>
 
-            <Route
-              path="/admin/products"
-              element={<ProtectedRoute isAdmin={true} />}
-            >
-              <Route path="/admin/products" element={<ProductList />} />
-            </Route>
+              <Route
+                path="/admin/products"
+                element={<ProtectedRoute isAdmin={true} />}
+              >
+                <Route path="/admin/products" element={<ProductList />} />
+              </Route>
 
-            <Route
-              path="/admin/products/:id"
-              element={<ProtectedRoute isAdmin={true} />}
-            >
-              <Route path="/admin/products/:id" element={<UpdateProduct />} />
-            </Route>
+              <Route
+                path="/admin/products/:id"
+                element={<ProtectedRoute isAdmin={true} />}
+              >
+                <Route path="/admin/products/:id" element={<UpdateProduct />} />
+              </Route>
 
-            <Route
-              path="/admin/products/new"
-              element={<ProtectedRoute isAdmin={true} />}
-            >
-              <Route path="/admin/products/new" element={<NewProduct />} />
-            </Route>
+              <Route
+                path="/admin/products/new"
+                element={<ProtectedRoute isAdmin={true} />}
+              >
+                <Route path="/admin/products/new" element={<NewProduct />} />
+              </Route>
 
-            <Route
-              path="/admin/orders"
-              element={<ProtectedRoute isAdmin={true} />}
-            >
-              <Route path="/admin/orders" element={<OrdersList />} />
-            </Route>
+              <Route
+                path="/admin/orders"
+                element={<ProtectedRoute isAdmin={true} />}
+              >
+                <Route path="/admin/orders" element={<OrdersList />} />
+              </Route>
 
-            <Route
-              path="/admin/order/:id"
-              element={<ProtectedRoute isAdmin={true} />}
-            >
-              <Route path="/admin/order/:id" element={<ProcessOrder />} />
-            </Route>
+              <Route
+                path="/admin/order/:id"
+                element={<ProtectedRoute isAdmin={true} />}
+              >
+                <Route path="/admin/order/:id" element={<ProcessOrder />} />
+              </Route>
 
-            <Route
-              path="/admin/users"
-              element={<ProtectedRoute isAdmin={true} />}
-            >
-              <Route path="/admin/users" element={<UsersList />} />
-            </Route>
+              <Route
+                path="/admin/users"
+                element={<ProtectedRoute isAdmin={true} />}
+              >
+                <Route path="/admin/users" element={<UsersList />} />
+              </Route>
 
-            <Route
-              path="/admin/user/:id"
-              element={<ProtectedRoute isAdmin={true} />}
-            >
-              <Route path="/admin/user/:id" element={<UpdateUser />} />
-            </Route>
+              <Route
+                path="/admin/user/:id"
+                element={<ProtectedRoute isAdmin={true} />}
+              >
+                <Route path="/admin/user/:id" element={<UpdateUser />} />
+              </Route>
 
-            <Route
-              path="/product/reviews"
-              element={<ProtectedRoute isAdmin={true} />}
-            >
-              <Route path="/product/reviews" element={<ProductReviews />} />
-            </Route>
+              <Route
+                path="/product/reviews"
+                element={<ProtectedRoute isAdmin={true} />}
+              >
+                <Route path="/product/reviews" element={<ProductReviews />} />
+              </Route>
 
-            <Route path="/cart" element={<ProtectedRoute isAdmin={false} />}>
-              <Route path="/cart" element={<Cart />} />
-            </Route>
+              <Route path="/cart" element={<ProtectedRoute isAdmin={false} />}>
+                <Route path="/cart" element={<Cart />} />
+              </Route>
 
-            <Route
-              path="/shipping"
-              element={<ProtectedRoute isAdmin={false} />}
-            >
-              <Route path="/shipping" element={<Shipping />} />
-            </Route>
+              <Route
+                path="/shipping"
+                element={<ProtectedRoute isAdmin={false} />}
+              >
+                <Route path="/shipping" element={<Shipping />} />
+              </Route>
 
-            <Route path="/confirm" element={<ProtectedRoute isAdmin={false} />}>
-              <Route path="/confirm" element={<ConfirmOrder />} />
-            </Route>
+              <Route
+                path="/confirm"
+                element={<ProtectedRoute isAdmin={false} />}
+              >
+                <Route path="/confirm" element={<ConfirmOrder />} />
+              </Route>
 
-            <Route path="/payment" element={<ProtectedRoute isAdmin={false} />}>
-              <Route path="/payment" element={<StripeContainer />} />
-            </Route>
+              <Route
+                path="/payment"
+                element={<ProtectedRoute isAdmin={false} />}
+              >
+                <Route path="/payment" element={<StripeContainer />} />
+              </Route>
 
-            <Route path="/success" element={<ProtectedRoute isAdmin={false} />}>
-              <Route path="/success" element={<OrderSuccess />} />
-            </Route>
-          </Routes>
+              <Route
+                path="/success"
+                element={<ProtectedRoute isAdmin={false} />}
+              >
+                <Route path="/success" element={<OrderSuccess />} />
+              </Route>
+            </Routes>
+          </div>
+          <Footer />
         </div>
-        <Footer />
-      </div>
-    </Router>
+      </Router>
+    </ThemeProvider>
   );
 }
 

@@ -38,6 +38,7 @@ const Products = ({ product, col }) => {
             type="submit"
             variant="contained"
             component={Link}
+            color="btn_color"
             to={`/products/${product._id}`}
           >
             View Details
