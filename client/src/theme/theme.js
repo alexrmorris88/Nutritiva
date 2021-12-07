@@ -10,6 +10,7 @@ export const useTheme = () => {
         // contrastText: will be calculated to contrast with palette.primary.main
       },
       btn_color: "#fefefe",
+      "&:hover": "black",
       secondary: {
         light: "#0066ff",
         main: "#0044ff",

@@ -38,6 +38,9 @@ app.use("/users", users);
 app.use("/orders", orders);
 app.use("/payment", payment);
 
+// Static Files Middleware
+app.use(express.static("public"));
+
 // Handling "Undhandled Promise Rejections"
 process.on("unhandledRejection", (err) => {
   console.log(`ERROR: ${err.message}`);
